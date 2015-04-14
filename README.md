@@ -1,6 +1,6 @@
 # Elmas
 
-Elmas means diamond, but in this case it's an API wrapper for Exact Online.
+Elmas means diamond, but in this case it's an API wrapper for [Exact Online](https://developers.exactonline.com/).
 
 ## Installation
 
