@@ -4,7 +4,11 @@ module Elmas
     def authorize(options={})
       # mock logging in with OAUTH
     end
-    
+
+    def authorized?
+      true
+    end
+
     # Return URL for OAuth authorization
     def authorize_url(options={})
       options[:response_type] ||= "code"
