@@ -24,8 +24,9 @@ module Elmas
     private
 
     # Perform an HTTP request
-    def request(method, path, options)
-      response = connection(raw).send(method) do |request|
+    def request(method, path, options={})
+      puts path
+      response = connection().send(method) do |request|
         case method
         when :get, :delete
           request.url(path, options)

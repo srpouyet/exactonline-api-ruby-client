@@ -1,5 +1,5 @@
 module Elmas
-  class Contact
+  class Invoice
     include Elmas::Resource
   end
 end

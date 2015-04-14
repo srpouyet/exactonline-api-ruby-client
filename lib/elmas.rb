@@ -3,6 +3,9 @@ require "elmas/api"
 require "elmas/config"
 require "elmas/response"
 require "elmas/client"
+require "elmas/resource"
+require "elmas/resources/contact"
+require "elmas/resources/invoice"
 require "oauth2"
 
 module Elmas
