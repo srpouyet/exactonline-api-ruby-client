@@ -1,6 +1,10 @@
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
   module OAuth
+    def authorize(options={})
+      # mock logging in with OAUTH
+    end
+    
     # Return URL for OAuth authorization
     def authorize_url(options={})
       options[:response_type] ||= "code"

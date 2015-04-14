@@ -76,6 +76,7 @@ module Elmas
       self.client_secret      = DEFAULT_CLIENT_SECRET
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
       self.redirect_uri       = DEFAULT_REDIRECT_URI
+      self.endpoint           = DEFAULT_ENDPOINT
       self.response_format    = DEFAULT_FORMAT
       self.user_agent         = DEFAULT_USER_AGENT
     end
