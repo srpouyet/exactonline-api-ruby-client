@@ -1,6 +1,6 @@
 # Elmas
 
-Elmas is a gem (yes a real gem, not only a ruby gem). But in this case it's an API wrapper for Exact Online.
+Elmas means diamond, but in this case it's an API wrapper for Exact Online.
 
 ## Installation
 
