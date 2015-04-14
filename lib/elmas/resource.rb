@@ -28,14 +28,14 @@ module Elmas
 
     def find
       begin
-        @response = Elmas.get(url)
+        @response = Response.create(Elmas.get(url))
       end
     end
 
     def save
       attributes_to_submit = self.sanitize
       begin
-        @response = Elmas.post(url, attributes_to_submit)
+        @response = Response.create(Elmas.post(url, attributes_to_submit))
       rescue
         #log error somehow
       end
