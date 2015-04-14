@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.version       = Elmas::Version
 
   spec.add_dependency "faraday", [">= 0.8", "< 0.10"]
+  spec.add_dependency "faraday_middleware", [">= 0.8", "< 0.10"]
   spec.add_dependency "oauth2", "1.0.0"
 
   spec.add_development_dependency "bundler", "~> 1.9"

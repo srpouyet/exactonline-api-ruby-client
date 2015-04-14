@@ -24,6 +24,15 @@ You have to have an Exact Online account and an app setup to connect with.
 
 You have to set a few env variables to make a connection possible. Copy the `.env.sample` file, edit it to match your credentials and save it as `.env`
 
+Then configure Elmas like this
+
+```ruby
+Elmas.configure do |config|
+  config.client_id = ENV['client_id']
+  config.client_secret = ENV['client_secret']
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
