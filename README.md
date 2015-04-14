@@ -27,15 +27,25 @@ You have to set a few env variables to make a connection possible. Copy the `.en
 Then configure Elmas like this
 
 ```ruby
-params = {
+client_params = {
   client_id: ENV['client_id'],
-  client_secret: ENV['client_secret'],
+  client_secret: ENV['client_secret']
+}
+
+authorize_params = {
   user_name: ENV['user_name'],
   password: ENV['password']
 }
 
-Elmas::Client.new(params).authorize
-#The client will now be authorized for 10 minutes, if there are requests the time will be reset, otherwise authorization should be called again
+client = Elmas::Client.new(client_params)
+client.authorize(authorize_params)
+#The client will now be authorized for 10 minutes,
+# if there are requests the time will be reset,
+# otherwise authorization should be called again.
+
+unless client.authorized?
+  client.authorize(authorize_params)
+end
 ```
 
 To find a contact

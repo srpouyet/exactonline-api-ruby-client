@@ -1,12 +1,19 @@
+require 'mechanize'
+
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
   module OAuth
-    def authorize(options={})
-      # mock logging in with OAUTH
+    def authorize(user_name, password, options={})
+      agent = Mechanize.new
+      agent.get(authorize_url(options))
+
+      #FILL IN FORM
     end
 
     def authorized?
-      true
+      response = Response.create(get('/current/Me'))
+      !response.unauthorized?
+      #Do a test call, return false if 401 or any error code
     end
 
     # Return URL for OAuth authorization
