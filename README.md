@@ -78,4 +78,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Hoppinger
 
-This gem was created by [Hoppinger](https://www.hoppinger.com)
+This gem was created by [Hoppinger](http://www.hoppinger.com)
