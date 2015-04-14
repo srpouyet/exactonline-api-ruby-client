@@ -5,10 +5,10 @@ module Elmas
   module Connection
     private
 
-    def connection()
+    def connection(connection_options={})
       options = {
-        :headers => {'Accept' => "application/#{response_format}; charset=utf-8", 'User-Agent' => user_agent},
-        :url => endpoint,
+        headers: {'Accept' => "application/#{response_format}; charset=utf-8", 'User-Agent' => user_agent},
+        url: "#{base_url}",
       }.merge(connection_options)
 
       Faraday::Connection.new(options) do |connection|

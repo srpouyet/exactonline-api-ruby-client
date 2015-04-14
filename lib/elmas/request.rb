@@ -25,7 +25,8 @@ module Elmas
 
     # Perform an HTTP request
     def request(method, path, options={})
-      response = connection().send(method) do |request|
+      path = build_url(path)
+      response = connection({url: path}).send(method) do |request|
         case method
         when :get, :delete
           request.url(path, options)
@@ -35,6 +36,10 @@ module Elmas
         end
       end
       return Response.create(response.body)
+    end
+
+    def build_url
+      "#{base_url}/#{endpoint}/#{division}/#{path}"
     end
   end
 end
