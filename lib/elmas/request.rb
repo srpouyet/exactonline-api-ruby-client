@@ -38,7 +38,7 @@ module Elmas
       return Response.create(response.body)
     end
 
-    def build_url
+    def build_url(path)
       "#{base_url}/#{endpoint}/#{division}/#{path}"
     end
   end
