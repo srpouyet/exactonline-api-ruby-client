@@ -3,7 +3,7 @@ require File.expand_path('../exception', __FILE__)
 
 module Elmas
   module Resource
-    STANDARD_FILTERS = [:id]
+    STANDARD_FILTERS = [:id].freeze
 
     attr_accessor :attributes
     attr_accessor :id
@@ -34,8 +34,8 @@ module Elmas
       find(base_path)
     end
 
+    # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
     def find(url = self.url)
-      puts url
       begin
         @response = Response.create(Elmas.get(url))
       rescue
@@ -43,6 +43,7 @@ module Elmas
       end
     end
 
+    # Pass filters in an array, for example [:id, :name]
     def find_by(filters)
       @filters = filters
       find
@@ -51,14 +52,13 @@ module Elmas
     def save
       attributes_to_submit = self.sanitize
       begin
-        @response = Response.create(Elmas.post(url, attributes_to_submit))
+        @response = Response.create(Elmas.post(base_path, attributes_to_submit))
       rescue
-        #log error somehow
+        puts "Horrible outcome, nothing works"
       end
-
-      response
     end
 
+    # Parse the attributes for to post to the API
     def sanitize
       to_submit = {}
       @attributes.each do |key, value|
@@ -96,11 +96,7 @@ module Elmas
     end
 
     def sign(index)
-      if index == 0
-        "?"
-      else
-        "&"
-      end
+      index == 0 ? "?" : "&"
     end
   end
 end
