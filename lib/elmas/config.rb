@@ -12,7 +12,8 @@ module Elmas
       :redirect_uri,
       :response_format,
       :user_agent,
-      :endpoint
+      :endpoint,
+      :base_url
     ].freeze
 
     # By default, don't set a user access token
@@ -82,6 +83,7 @@ module Elmas
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
       self.redirect_uri       = DEFAULT_REDIRECT_URI
       self.endpoint           = DEFAULT_ENDPOINT
+      self.base_url           = DEFAULT_BASE_URL
       self.response_format    = DEFAULT_FORMAT
       self.user_agent         = DEFAULT_USER_AGENT
     end

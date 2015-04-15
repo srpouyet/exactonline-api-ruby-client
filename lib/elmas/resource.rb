@@ -1,13 +1,17 @@
 require File.expand_path('../utils', __FILE__)
+require File.expand_path('../exception', __FILE__)
 
 module Elmas
   module Resource
+    STANDARD_FILTERS = [:id]
+
     attr_accessor :attributes
     attr_accessor :id
-    attr_accessor :href
+    attr_accessor :url
 
     def initialize(attributes = {})
       @attributes = attributes
+      @filters = STANDARD_FILTERS
     end
 
     def id
@@ -18,18 +22,30 @@ module Elmas
       attributes[:id] = value
     end
 
+    def base_path
+      Utils.collection_path self.class.name
+    end
+
     def url
-      if id
-        "#{Utils.collection_path self.class.name}/#{id}"
-      else
-        Utils.collection_path self.class.name
+      apply_filters(base_path)
+    end
+
+    def find_all
+      find(base_path)
+    end
+
+    def find(url = self.url)
+      puts url
+      begin
+        @response = Response.create(Elmas.get(url))
+      rescue
+        puts "I dunno what went wrong"
       end
     end
 
-    def find
-      begin
-        @response = Response.create(Elmas.get(url))
-      end
+    def find_by(filters)
+      @filters = filters
+      find
     end
 
     def save
@@ -57,6 +73,34 @@ module Elmas
 
     def response
       @response
+    end
+
+    #?$filter=ID eq guid'#{id}'
+    def id_filter(sign)
+      "#{sign}$filter=ID eq guid'#{id}'"
+    end
+
+    def base_filter(sign, attribute)
+      if attribute == :id
+        id_filter(sign)
+      else
+        "#{sign}$filter=#{attribute.to_s} eq '#{@attributes[attribute]}'"
+      end
+    end
+
+    def apply_filters(path)
+      @filters.each_with_index do |filter, index|
+       path += base_filter(sign(index), filter)
+      end
+      path
+    end
+
+    def sign(index)
+      if index == 0
+        "?"
+      else
+        "&"
+      end
     end
   end
 end

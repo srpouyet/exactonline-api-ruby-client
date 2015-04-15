@@ -1,9 +1,13 @@
 module Elmas
   module Response
     attr_accessor :status_code, :body
+    
     def self.create(response)
       @body = response.body
       @status_code = response.status_code
+
+      raise BadRequestException(@status_code) if fail?
+      raise UnauthorizedException(@status_code) if unauthorized?
     end
 
     def success?
