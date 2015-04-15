@@ -22,7 +22,8 @@ Or install it yourself as:
 
 You have to have an Exact Online account and an app setup to connect with.
 
-You have to set a few env variables to make a connection possible. Copy the `.env.sample` file, edit it to match your credentials and save it as `.env`
+You have to set a few variables to make a connection possible. I'd suggest using environment variables set with [dotenv](https://github.com/bkeepers/dotenv) for that. (You can of course hardcode them, but that is not very secure :-) )
+
 
 Then configure Elmas like this
 
@@ -53,18 +54,21 @@ To find a contact
 ```ruby
 contact = Elmas::Contact.new(id: "23445")
 contact.find
+# path = /crm/Contacts?$filter=ID eq guid'23445'
 ```
 
 To find a contact with specific filters
 ```ruby
 contact = Elmas::Contact.new(first_name: "Karel", id: "23")
-contact.find_by([:name])
+contact.find_by([:first_name])
+# path = /crm/Contacts?$filter=first_name eq 'Karel'
 ```
 
 To find all contacts
 ```ruby
 contact = Elmas::Contact.new
 contact.find_all
+# path = /crm/Contacts
 ```
 
 To create a new contact
