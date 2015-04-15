@@ -55,6 +55,18 @@ contact = Elmas::Contact.new(id: "23445")
 contact.find
 ```
 
+To find a contact with specific filters
+```ruby
+contact = Elmas::Contact.new(first_name: "Karel", id: "23")
+contact.find_by([:name])
+```
+
+To find all contacts
+```ruby
+contact = Elmas::Contact.new
+contact.find_all
+```
+
 To create a new contact
 
 ```ruby
