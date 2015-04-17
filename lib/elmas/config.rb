@@ -18,7 +18,7 @@ module Elmas
     ].freeze
 
     # By default, don't set a user access token
-    DEFAULT_ACCESS_TOKEN = "Bearer gAAAACL9WnEMG1TNeO56TZJsTiWVvExd9cyqku9K58U5fbw28M_EfvTqtcwlHv7Q-qyThxJVf0ltvlO7cCNtPQyXVfh252IHxIB45Vt7osKZW6zxpJ3Nl7xndHcPAGY9IQj0ESD_M543xjYpzwb8D1r2rV1fUFSs3d2hEWlqSpLsy34mFAEAAIAAAAC2RXGKqu90HnYBEz5PBSMeIRW4yeSYfuXnF2P4gVwG1dBSeJXsnfFQ3xj8sWLpMLVrcrhYVdM5iLgyK4InHOUQYVHlaWCEhxgQ1q5z3lTJ6bIkNj9i3VN5uuO46H02gQKRpvn0RO9oCwXgXa7E_0ujg9vLk9cWJYXTf4ygihTzi2ttK9WpfxW3a72o2buphTuZIqOzxrMmrAuRBXNnB8OT0vICwAHc77mBFYF6r21M1dwLvbiu3Ommt7LU_0qJPMm2h8V9HIBwlmPB0ygOgyy6nOp14QuBc2a35_Zclr9HFG3LhGgyXTss8jDCGGly6PJdtfAoQ2D5RZaYV1emx9w7QxmMJVQQFWDuqUqVv4wP4w"
+    DEFAULT_ACCESS_TOKEN = nil
 
     # The adapter that will be used to connect if none is set
     #
@@ -40,7 +40,7 @@ module Elmas
     DEFAULT_ENDPOINT = "/api/v1".freeze
 
     #the division code you want to connect with
-    DEFAULT_DIVISION = nil
+    DEFAULT_DIVISION =  nil # "/797636"
 
     # The response format appended to the path and sent in the 'Accept' header if none is set
     #

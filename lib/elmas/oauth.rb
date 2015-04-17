@@ -19,7 +19,6 @@ module Elmas
 
     def authorized?
       response = get('/Current/Me', no_division: true)
-      division = response.parsed.first_result["CurrentDivision"]
       !response.unauthorized?
       #Do a test call, return false if 401 or any error code
     end
