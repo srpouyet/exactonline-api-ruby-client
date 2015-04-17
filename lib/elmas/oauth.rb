@@ -1,13 +1,20 @@
 require 'mechanize'
-
+require 'uri'
+require File.expand_path('../utils', __FILE__)
+require 'pry'
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
   module OAuth
     def authorize(user_name, password, options={})
       agent = Mechanize.new
-      agent.get(authorize_url(options))
-
-      #FILL IN FORM
+      agent.get(authorize_url(options)) do |page|
+        form = page.forms.first
+        form['UserNameField'] = user_name
+        form['PasswordField'] = password
+        page = form.click_button
+      end
+      code = agent.page.uri.query.split('=').last
+      token = get_access_token(code)
     end
 
     def authorized?
@@ -21,7 +28,9 @@ module Elmas
       options[:response_type] ||= "code"
       options[:redirect_uri] ||= self.redirect_uri
       params = authorization_params.merge(options)
-      connection.build_url("/api/oauth2/auth/", params).to_s
+      uri = URI("#{base_url}/api/oauth2/auth/")
+      uri.query = URI.encode_www_form(params)
+      uri.to_s
     end
 
     # Return an access token from authorization
@@ -29,7 +38,7 @@ module Elmas
       options[:grant_type] ||= "authorization_code"
       options[:redirect_uri] ||= self.redirect_uri
       params = access_token_params.merge(options)
-      post("/api/oauth2/access_token/", params.merge(code: code))
+      post("/api/oauth2/token", { url: base_url, params: params.merge(code: code) })
     end
 
     private

@@ -8,6 +8,7 @@ module Elmas
     attr_accessor :attributes
     attr_accessor :id
     attr_accessor :url
+    attr_accessor :response
 
     def initialize(attributes = {})
       @attributes = attributes
@@ -37,7 +38,7 @@ module Elmas
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
     def find(url = self.url)
       begin
-        @response = Response.create(Elmas.get(url))
+        @response = Elmas.get(url)
       rescue
         puts "I dunno what went wrong"
       end
@@ -52,7 +53,7 @@ module Elmas
     def save
       attributes_to_submit = self.sanitize
       begin
-        @response = Response.create(Elmas.post(base_path, attributes_to_submit))
+        @response = Elmas.post(base_path, attributes_to_submit)
       rescue
         puts "Horrible outcome, nothing works"
       end

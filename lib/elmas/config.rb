@@ -13,6 +13,7 @@ module Elmas
       :response_format,
       :user_agent,
       :endpoint,
+      :division,
       :base_url
     ].freeze
 
@@ -46,7 +47,7 @@ module Elmas
     DEFAULT_FORMAT = :json
 
     # By default, don't set an application redirect uri
-    DEFAULT_REDIRECT_URI = nil
+    DEFAULT_REDIRECT_URI = "https://www.getpostman.com/oauth2/callback"
 
     # By default, don't set user agent
     DEFAULT_USER_AGENT = nil
@@ -83,6 +84,7 @@ module Elmas
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
       self.redirect_uri       = DEFAULT_REDIRECT_URI
       self.endpoint           = DEFAULT_ENDPOINT
+      self.division           = DEFAULT_DIVISION
       self.base_url           = DEFAULT_BASE_URL
       self.response_format    = DEFAULT_FORMAT
       self.user_agent         = DEFAULT_USER_AGENT

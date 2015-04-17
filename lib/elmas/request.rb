@@ -1,14 +1,16 @@
+require 'pry'
+
 module Elmas
   # Defines HTTP request methods
   module Request
     # Perform an HTTP GET request
     def get(path, options={})
-      request(:get, path)
+      request(:get, path, options)
     end
 
     # Perform an HTTP POST request
     def post(path, options={})
-      request(:post, path)
+      request(:post, path, options)
     end
 
     # Perform an HTTP PUT request
@@ -18,27 +20,34 @@ module Elmas
 
     # Perform an HTTP DELETE request
     def delete(path, options={})
-      request(:delete, path)
+      request(:delete, path, options)
     end
 
     private
 
     # Perform an HTTP request
     def request(method, path, options={})
-      response = connection({url: default_url}).send(method) do |request|
+      url = options[:url] || default_url
+      connection = setup_connection(url)
+      connection.send(method) do |request|
         case method
-        when :get, :delete
-          request.url(path, options)
-        when :post, :put
-          request.path = path
-          request.body = options unless options.empty?
+        when :post
+          request.url path
+          request.body = options[:params]
+        when :get
+          request.url path
         end
       end
-      return Response.create(response.body)
     end
 
     def default_url
-      "#{base_url}/#{endpoint}/#{division}"
+      "#{base_url}/#{endpoint}"
+    end
+
+    def setup_connection(url)
+      Faraday.new(url: url) do |faraday|
+        faraday.adapter  Faraday.default_adapter
+      end
     end
   end
 end
