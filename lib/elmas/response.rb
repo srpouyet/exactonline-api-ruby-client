@@ -1,13 +1,27 @@
-module Elmas
-  module Response
-    attr_accessor :status_code, :body
+require File.expand_path('../parser', __FILE__)
 
-    def self.create(response)
+module Elmas
+  class Response
+    attr_accessor :status_code, :body, :response
+
+    def initialize(response)
       @response = response
     end
 
     def success?
       @response.success?
+    end
+
+    def body
+      @response.body
+    end
+
+    def parsed
+      Parser.new(body)
+    end
+
+    def status
+      @response.status
     end
 
     def fail?

@@ -18,7 +18,8 @@ module Elmas
     end
 
     def authorized?
-      response = Response.create(get('/current/Me'))
+      response = get('/Current/Me', no_division: true)
+      division = response.parsed.first_result["CurrentDivision"]
       !response.unauthorized?
       #Do a test call, return false if 401 or any error code
     end
@@ -35,10 +36,11 @@ module Elmas
 
     # Return an access token from authorization
     def get_access_token(code, options={})
-      options[:grant_type] ||= "authorization_code"
+      options[:code] = code
       options[:redirect_uri] ||= self.redirect_uri
+      options[:grant_type] ||= "authorization_code"
       params = access_token_params.merge(options)
-      post("/api/oauth2/token", { url: base_url, params: params.merge(code: code) })
+      post("/api/oauth2/token", no_endpoint: true, params: params)
     end
 
     private

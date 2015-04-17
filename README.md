@@ -78,6 +78,15 @@ contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel", id: "23787
 contact.save
 ```
 
+###Divisions and Endpoints
+
+Usually in the exact wrapper you need a division number, this one will be set on authorization checks (with `/Current/Me` endpoint). Sometimes you need to do a request without the division number, or even without the standard `/api/v1` endpoint. Like so:
+
+```ruby
+response = Elmas.get('/api/oauth2/token', no_endpoint: true, no_division: true)
+response = Elmas.get('/Current/Me', no_division: true)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
