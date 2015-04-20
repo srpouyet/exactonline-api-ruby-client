@@ -1,6 +1,6 @@
 require File.expand_path('../utils', __FILE__)
 require File.expand_path('../exception', __FILE__)
-
+require 'pry'
 module Elmas
   module Resource
     STANDARD_FILTERS = [:id].freeze
@@ -98,6 +98,14 @@ module Elmas
 
     def sign(index)
       index == 0 ? "?" : "&"
+    end
+
+    # Getter/Setter for resource
+    def method_missing(method, *args, &block)
+      if /^(\w+)=$/ =~ method
+        @attributes[Utils.camelize($1)] = args[0]
+      end
+      @attributes[Utils.camelize(method)]
     end
   end
 end

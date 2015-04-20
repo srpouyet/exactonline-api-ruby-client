@@ -1,4 +1,5 @@
 require File.expand_path('../parser', __FILE__)
+require File.expand_path('../utils', __FILE__)
 
 module Elmas
   class Response
@@ -18,6 +19,29 @@ module Elmas
 
     def parsed
       Parser.new(body)
+    end
+
+    def results
+      results = []
+      if parsed.results.any?
+        parsed.results.each do |attributes|
+          constant_name = Utils.modulize(type)
+          klass = Object.const_get(constant_name)
+          results << klass.send(:new, attributes)
+        end
+      end
+      results
+    end
+
+    def first
+      results.first if results
+    end
+
+    def type
+      if parsed.results.any?
+        c_type = parsed.results.first["__metadata"]["type"]
+        c_type.split('.').last
+      end
     end
 
     def status

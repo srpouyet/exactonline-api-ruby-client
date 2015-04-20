@@ -8,18 +8,20 @@ module Elmas
       word.to_s.sub(/([^s])$/, '\1s')
     end
 
+    def self.modulize(class_name)
+      "Elmas::#{class_name}"
+    end
+
     def self.collection_path(class_name)
       Utils.pluralize Utils.demodulize class_name
     end
 
-    def self.build_url(url = nil, extra_params = nil)
-      uri = url
-
-      query_values = params.dup.merge_query(uri.query, options.params_encoder)
-      query_values.update extra_params if extra_params
-      uri.query = query_values.empty? ? nil : query_values.to_query(options.params_encoder)
-
-      uri
+    def self.camelize(word, uppercase_first_letter = true)
+      if uppercase_first_letter
+        word.to_s.gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
+      else
+        word.first + Utils.camelize(word)[1..-1]
+      end
     end
   end
 end
