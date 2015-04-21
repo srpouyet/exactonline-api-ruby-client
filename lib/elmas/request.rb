@@ -57,7 +57,7 @@ module Elmas
     def setup_connection(url)
       connection_url = url || base_url
       Faraday.new(url: connection_url) do |faraday|
-        # faraday.response :detailed_logger
+        faraday.response :detailed_logger
         faraday.adapter Faraday.default_adapter
       end
     end

@@ -28,7 +28,7 @@ module Elmas
       options[:response_type] ||= "code"
       options[:redirect_uri] ||= self.redirect_uri
       params = authorization_params.merge(options)
-      uri = URI("#{base_url}/api/oauth2/auth/")
+      uri = URI("https://start.exactonline.nl/api/oauth2/auth/")
       uri.query = URI.encode_www_form(params)
       uri.to_s
     end
@@ -39,7 +39,7 @@ module Elmas
       options[:redirect_uri] ||= self.redirect_uri
       options[:grant_type] ||= "authorization_code"
       params = access_token_params.merge(options)
-      post("/api/oauth2/token", no_endpoint: true, params: params)
+      post("/api/oauth2/token", no_endpoint: true, no_division: true, params: params)
     end
 
     private
@@ -52,7 +52,7 @@ module Elmas
 
     def access_token_params
       {
-        client_id: client_id,
+        client_id: "{#{client_id}}",
         client_secret: client_secret
       }
     end

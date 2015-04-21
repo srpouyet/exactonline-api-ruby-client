@@ -11,7 +11,7 @@ module Elmas
     attr_accessor :response
 
     def initialize(attributes = {})
-      @attributes = attributes
+      @attributes = Utils.normalize_hash(attributes)
       @filters = STANDARD_FILTERS
     end
 
@@ -103,9 +103,11 @@ module Elmas
     # Getter/Setter for resource
     def method_missing(method, *args, &block)
       if /^(\w+)=$/ =~ method
-        @attributes[Utils.camelize($1)] = args[0]
+        @attributes[$1.to_sym] = args[0]
+      else
+        nil unless @attributes[method.to_sym]
       end
-      @attributes[Utils.camelize(method)]
+      @attributes[method.to_sym]
     end
   end
 end

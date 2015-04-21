@@ -23,5 +23,21 @@ module Elmas
         word.first + Utils.camelize(word)[1..-1]
       end
     end
+
+    def self.normalize_hash_key(key)
+      if key.is_a? String
+        key = key.gsub(/::/, '/')
+        key = key.gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+        key = key.gsub(/([a-z\d])([A-Z])/,'\1_\2')
+        key = key.tr("-","_")
+        key = key.downcase
+        return key.to_sym
+      end
+      key
+    end
+
+    def self.normalize_hash(hash)
+      Hash[hash.map{ |k, v| [Utils.normalize_hash_key(k), v] }]
+    end
   end
 end
