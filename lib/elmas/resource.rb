@@ -60,10 +60,14 @@ module Elmas
 
     def save
       attributes_to_submit = self.sanitize
-      begin
-        @response = Elmas.post(base_path, attributes_to_submit)
-      rescue
-        puts "Horrible outcome, nothing works"
+      if self.valid?
+        begin
+          @response = Elmas.post(base_path, attributes_to_submit)
+        rescue
+          puts "Horrible outcome, nothing works"
+        end
+      else
+        puts "Resource is not valid, you should add some more attributes"
       end
     end
 
