@@ -44,6 +44,14 @@ module Elmas
       end
     end
 
+    def valid?
+      valid = true
+      mandatory_attributes.each do |attribute|
+        valid = @attributes.has_key? attribute
+      end
+      valid
+    end
+
     # Pass filters in an array, for example [:id, :name]
     def find_by(filters)
       @filters = filters
