@@ -1,7 +1,10 @@
-require 'mechanize'
+# require 'mechanize'
 require 'uri'
 require File.expand_path('../utils', __FILE__)
 require 'pry'
+require "faraday/detailed_logger"
+
+## DOES NOT WORK, CONFIGURE WITH OTHERWISE OBTAINED CODE RIGHT NOW
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
   module OAuth
@@ -14,7 +17,8 @@ module Elmas
         page = form.click_button
       end
       code = agent.page.uri.query.split('=').last
-      token = get_access_token(code)
+      uri = agent.page.uri
+      token = get_access_token(code, uri)
     end
 
     def authorized?
@@ -34,12 +38,18 @@ module Elmas
     end
 
     # Return an access token from authorization
-    def get_access_token(code, options={})
+    def get_access_token(code, uri, options={})
+      conn = Faraday.new(:url => 'https://start.exactonline.nl') do |faraday|
+       faraday.request  :url_encoded             # form-encode POST params
+       faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+       faraday.response :detailed_logger
+      end
       options[:code] = code
-      options[:redirect_uri] ||= self.redirect_uri
+      options[:redirect_uri] ||= uri
       options[:grant_type] ||= "authorization_code"
       params = access_token_params.merge(options)
-      post("/api/oauth2/token", no_endpoint: true, no_division: true, params: params)
+      binding.pry
+      response = conn.post "/api/oauth2/token", params
     end
 
     private
@@ -52,8 +62,9 @@ module Elmas
 
     def access_token_params
       {
-        client_id: "{#{client_id}}",
-        client_secret: client_secret
+        client_id: client_id,
+        client_secret: client_secret,
+        force_login: "0"
       }
     end
   end
