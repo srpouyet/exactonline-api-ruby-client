@@ -2,6 +2,6 @@ require 'faraday'
 
 module Elmas
   class Client < API
-    #Put resources in modules
+    # We could move the connection out of the request into the client..
   end
 end

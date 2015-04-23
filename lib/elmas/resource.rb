@@ -76,7 +76,7 @@ module Elmas
       to_submit = {}
       @attributes.each do |key, value|
         if value.is_a? Elmas::Resource #Turn relation into ID
-          to_submit["#{key}_#{id}"] = value.id
+          to_submit["#{key}".to_sym] = value.id
         else
           to_submit[key] = value
         end
