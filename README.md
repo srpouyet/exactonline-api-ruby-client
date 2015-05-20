@@ -28,24 +28,19 @@ You have to set a few variables to make a connection possible. I'd suggest using
 Then configure Elmas like this
 
 ```ruby
-client_params = {
-  client_id: ENV['client_id'],
-  client_secret: ENV['client_secret']
-}
+Elmas.configure do |config|
+  config.client_id = ENV['client_id'],
+  config.client_secret = ENV['client_secret']
+  config.access_token = Elmas.authorize(ENV['user_name'], ENV['password'])
+end
 
-authorize_params = {
-  user_name: ENV['user_name'],
-  password: ENV['password']
-}
-
-client = Elmas::Client.new(client_params)
-client.authorize(authorize_params)
 #The client will now be authorized for 10 minutes,
 # if there are requests the time will be reset,
 # otherwise authorization should be called again.
-
-unless client.authorized?
-  client.authorize(authorize_params)
+unless Elmas.authorized?
+  Elmas.configure do |config|
+    config.access_token = Elmas.authorize(ENV['user_name'], ENV['password'])
+  end
 end
 ```
 
