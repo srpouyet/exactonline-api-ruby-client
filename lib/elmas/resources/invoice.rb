@@ -4,7 +4,7 @@ module Elmas
     # It should also have a journal id and a contact id who ordered it
     include Elmas::Resource
 
-    def url
+    def base_path
       "salesinvoice/SalesInvoices"
     end
 

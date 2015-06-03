@@ -30,7 +30,7 @@ describe Elmas::Contact do
 
     it "should apply no filters for find_all" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(resource).to receive(:find) { "/crm/Contacts" }
+      expect(Elmas).to receive(:get) { "/crm/Contacts" }
       resource.find_all
     end
 
