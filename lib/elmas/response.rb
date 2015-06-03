@@ -1,5 +1,5 @@
-require File.expand_path('../parser', __FILE__)
-require File.expand_path('../utils', __FILE__)
+require File.expand_path("../parser", __FILE__)
+require File.expand_path("../utils", __FILE__)
 
 module Elmas
   class Response
@@ -38,10 +38,9 @@ module Elmas
     end
 
     def type
-      if parsed.results.any?
-        c_type = parsed.results.first["__metadata"]["type"]
-        c_type.split('.').last
-      end
+      return unless parsed.results.any?
+      c_type = parsed.results.first["__metadata"]["type"]
+      c_type.split(".").last
     end
 
     def status

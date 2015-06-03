@@ -39,8 +39,8 @@ module Elmas
     # The endpoint that will be used to connect if none is set
     DEFAULT_ENDPOINT = "/api/v1".freeze
 
-    #the division code you want to connect with
-    DEFAULT_DIVISION =  nil #"/797636"
+    # the division code you want to connect with
+    DEFAULT_DIVISION =  nil # "/797636"
 
     # The response format appended to the path and sent in the 'Accept' header if none is set
     #

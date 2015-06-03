@@ -13,14 +13,14 @@ module Elmas
     end
 
     def self.collection_path(class_name)
-      Utils.pluralize Utils.demodulize class_name
+      (Utils.pluralize Utils.demodulize class_name).downcase
     end
 
     def self.camelize(word, uppercase_first_letter = true)
       if uppercase_first_letter
-        word.to_s.gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
+        word.to_s.gsub(%r{/\/(.?)/}) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
       else
-        word.first + Utils.camelize(word)[1..-1]
+        word[0] + Utils.camelize(word)[1..-1]
       end
     end
 

@@ -15,7 +15,5 @@ module Elmas
     end
   end
 
-  class UnauthorizedException < Exception
-
-  end
+  class UnauthorizedException < Exception; end
 end
