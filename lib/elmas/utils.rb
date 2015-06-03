@@ -1,7 +1,7 @@
 module Elmas
   module Utils
     def self.demodulize(class_name_in_module)
-      class_name_in_module.to_s.sub(/^.*::/, '')
+      class_name_in_module.to_s.sub(/^.*::/, "")
     end
 
     def self.pluralize(word)
@@ -26,10 +26,10 @@ module Elmas
 
     def self.normalize_hash_key(key)
       if key.is_a? String
-        key = key.gsub(/::/, '/')
-        key = key.gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-        key = key.gsub(/([a-z\d])([A-Z])/,'\1_\2')
-        key = key.tr("-","_")
+        key = key.gsub(/::/, "/")
+        key = key.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        key = key.gsub(/([a-z\d])([A-Z])/, '\1_\2')
+        key = key.tr("-", "_")
         key = key.downcase
         return key.to_sym
       end
@@ -37,7 +37,7 @@ module Elmas
     end
 
     def self.normalize_hash(hash)
-      Hash[hash.map{ |k, v| [Utils.normalize_hash_key(k), v] }]
+      Hash[hash.map { |k, v| [Utils.normalize_hash_key(k), v] }]
     end
   end
 end

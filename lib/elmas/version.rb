@@ -6,7 +6,7 @@ module Elmas
 
     class << self
       def to_s
-        [MAJOR, MINOR, PATCH].compact.join('.')
+        [MAJOR, MINOR, PATCH].compact.join(".")
       end
     end
   end

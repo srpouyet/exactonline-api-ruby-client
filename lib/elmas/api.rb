@@ -1,15 +1,15 @@
-require File.expand_path('../request', __FILE__)
-require File.expand_path('../config', __FILE__)
-require File.expand_path('../oauth', __FILE__)
+require File.expand_path("../request", __FILE__)
+require File.expand_path("../config", __FILE__)
+require File.expand_path("../oauth", __FILE__)
 
 module Elmas
   # @private
   class API
     # @private
-    attr_accessor *Config::VALID_OPTIONS_KEYS
+    attr_accessor *(Config::VALID_OPTIONS_KEYS)
 
     # Creates a new API
-    def initialize(options={})
+    def initialize(options = {})
       options = Elmas.options.merge(options)
       Config::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])

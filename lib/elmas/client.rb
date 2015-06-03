@@ -1,4 +1,4 @@
-require 'faraday'
+require "faraday"
 
 module Elmas
   class Client < API

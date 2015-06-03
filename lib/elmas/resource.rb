@@ -5,10 +5,8 @@ module Elmas
   module Resource
     STANDARD_FILTERS = [:id].freeze
 
-    attr_accessor :attributes
-    attr_accessor :id
-    attr_accessor :url
-    attr_accessor :response
+    attr_accessor :attribute, :id, :url
+    attr_reader :response
 
     def initialize(attributes = {})
       @attributes = Utils.normalize_hash(attributes)
@@ -82,10 +80,6 @@ module Elmas
         end
       end
       to_submit
-    end
-
-    def response
-      @response
     end
 
     #?$filter=ID eq guid'#{id}'
