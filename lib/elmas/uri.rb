@@ -7,7 +7,7 @@ module Elmas
 
       def uri(options = {})
         options.each do |option|
-          self.send("apply_#{option}".to_sym)
+          send("apply_#{option}".to_sym)
         end
         uri = URI(base_path)
         uri.query = URI.encode_www_form(@query)
@@ -39,7 +39,7 @@ module Elmas
       end
 
       def apply_select
-        @query << ["$select", @select.join(',')] if @select
+        @query << ["$select", @select.join(",")] if @select
       end
     end
   end

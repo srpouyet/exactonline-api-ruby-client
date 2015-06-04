@@ -39,20 +39,20 @@ module Elmas
     end
 
     # Return an access token from authorization
-    def get_access_token(code, uri, options = {})
+    def get_access_token(code, uri, _options = {})
       conn = Faraday.new(url: "https://start.exactonline.nl") do |faraday|
         faraday.request :url_encoded             # form-encode POST params
         faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
         faraday.response :detailed_logger
       end
       params = access_token_params(code, uri)
-      binding.pry
-      # conn.post do |req|
-      #   req.url "/api/oauth2/token"
-      #   req.body = params
-      #   req.headers['Accept'] = 'application/json'
-      # end
-      Typhoeus.post("http://start.exactonline.nl/api/oauth2/token", body: params)
+      # binding.pry
+      conn.post do |req|
+        req.url "/api/oauth2/token"
+        req.body = params
+        req.headers["Accept"] = "application/json"
+      end
+      # Typhoeus.post("https://start.exactonline.nl/api/oauth2/token", body: params)
     end
 
     private

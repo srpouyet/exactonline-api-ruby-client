@@ -31,7 +31,7 @@ module Elmas
       get(uri([:order, :select, :filters]))
     end
 
-    def find(uri = self.uri)
+    def find
       get(uri([:filters]))
     end
 
@@ -48,14 +48,14 @@ module Elmas
       valid
     end
 
-    def has_id?
+    def id?
       !@attributes[:id].nil?
     end
 
     def save
       attributes_to_submit = sanitize
       if valid?
-        if has_id?
+        if id?
           return @response = Elmas.put(base_path, params: attributes_to_submit)
         else
           return @response = Elmas.post(base_path, params: attributes_to_submit)
