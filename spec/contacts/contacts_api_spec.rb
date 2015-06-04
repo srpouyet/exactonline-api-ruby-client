@@ -25,7 +25,8 @@ describe Elmas::Contact do
   context "Applying filters" do
     it "should apply ID filter for find" do
       resource = Elmas::Contact.new(id: "23")
-      expect(URI.unescape(resource.uri([:filters]).to_s)).to eq("crm/Contacts?$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$filter=ID+eq+guid'23'")
+      resource.find
     end
 
     it "should apply no filters for find_all" do
@@ -38,6 +39,40 @@ describe Elmas::Contact do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
       expect(Elmas).to receive(:get).with("crm/Contacts?$filter=name+eq+'Karel'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:name, :id])
+    end
+  end
+
+  context "Applying order" do
+    it "should apply the order_by and filters" do
+      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=name&$filter=name+eq+'Karel'&$filter=ID+eq+guid'23'")
+      resource.find_by(filters: [:name, :id], order_by: :name)
+    end
+
+    it "should only apply the order_by" do
+      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=name")
+      resource.find_all(order_by: :name)
+    end
+  end
+
+  context "Applying select" do
+    it "should apply one select" do
+      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$select=name")
+      resource.find_all(select: [:name])
+    end
+
+    it "should apply one select with find_by" do
+      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$select=name")
+      resource.find_by(select: [:name])
+    end
+
+    it "should apply one select" do
+      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$select=name,age")
+      resource.find_all(select: [:name, :age])
     end
   end
 end

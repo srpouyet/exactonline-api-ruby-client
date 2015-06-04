@@ -1,8 +1,11 @@
 require File.expand_path("../utils", __FILE__)
 require File.expand_path("../exception", __FILE__)
+require File.expand_path("../uri", __FILE__)
 
 module Elmas
   module Resource
+    include UriMethods
+
     STANDARD_FILTERS = [:id].freeze
 
     attr_accessor :attribute, :url
@@ -12,19 +15,6 @@ module Elmas
       @attributes = Utils.normalize_hash(attributes)
       @filters = STANDARD_FILTERS
       @query = []
-    end
-
-    def base_path
-      Utils.collection_path self.class.name
-    end
-
-    def uri(options = {})
-      options.each do |option|
-        self.send("apply_#{option}".to_sym)
-      end
-      uri = URI(base_path)
-      uri.query = URI.encode_www_form(@query)
-      uri
     end
 
     def find_all(options = {})
@@ -87,37 +77,6 @@ module Elmas
         end
       end
       to_submit
-    end
-
-    # ?$filter=ID eq guid'#{id}'
-    def id_filter
-      ["$filter", "ID eq guid'#{id}'"]
-    end
-
-    def base_filter(attribute)
-      if attribute == :id
-        return id_filter
-      else
-        return ["$filter", "#{attribute} eq '#{@attributes[attribute]}'"]
-      end
-    end
-
-    def apply_filters
-      @filters.each_with_index do |filter, index|
-        @query << base_filter(filter)
-      end
-    end
-
-    def apply_order
-
-    end
-
-    def apply_select
-
-    end
-
-    def sign(index)
-      index == 0 ? "?" : "&"
     end
 
     # Getter/Setter for resource
