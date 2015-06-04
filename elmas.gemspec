@@ -29,5 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("pry", ">= 0.0")
   spec.add_development_dependency("webmock", "~> 1.6")
   spec.add_development_dependency("rubycritic", "~> 1.4.0")
+  spec.add_development_dependency("guard-rspec")
   spec.add_dependency("faraday-detailed_logger")
 end

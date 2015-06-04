@@ -47,7 +47,7 @@ module Elmas
     def save
       attributes_to_submit = sanitize
       if valid?
-        @response = Elmas.post(base_path, attributes_to_submit)
+        @response = Elmas.post(base_path, params: attributes_to_submit)
       else
         Elmas::Response.new
         # TODO: log "Resource is not valid, you should add some more attributes"

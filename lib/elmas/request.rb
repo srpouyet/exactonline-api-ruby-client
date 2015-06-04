@@ -25,9 +25,10 @@ module Elmas
 
     private
 
-    def parse_path(path, options)
+    def build_path(path, options)
       path = "#{division}/#{path}" unless options[:no_division]
-      path = endpoint + path unless options[:no_endpoint]
+      path = "#{endpoint}/#{path}" unless options[:no_endpoint]
+      path = "#{options[:url] || base_url}/#{path}"
       path
     end
 
@@ -42,8 +43,7 @@ module Elmas
 
     # Perform an HTTP request
     def request(method, path, options = {})
-      path = parse_path(path, options)
-      connection = setup_connection(options[:url])
+      path = build_path(path, options)
 
       response = connection.send(method) do |request|
         case method
@@ -56,14 +56,6 @@ module Elmas
         request.headers = add_headers
       end
       Response.new(response)
-    end
-
-    def setup_connection(url)
-      connection_url = url || base_url
-      Faraday.new(url: connection_url) do |faraday|
-        faraday.response :detailed_logger
-        faraday.adapter Faraday.default_adapter
-      end
     end
   end
 end

@@ -4,7 +4,7 @@ module Elmas
     include Elmas::Resource
 
     def base_path
-      "/crm/Contacts"
+      "crm/Contacts"
     end
 
     def mandatory_attributes
