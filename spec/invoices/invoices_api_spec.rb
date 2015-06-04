@@ -26,19 +26,19 @@ describe Elmas::Invoice do
   context "Applying filters" do
     it "should apply ID filter for find" do
       resource = Elmas::Invoice.new(id: "23")
-      expect(resource.url).to eq("salesinvoice/SalesInvoices?$filter=ID eq guid'23'")
+      expect(URI.unescape(resource.uri([:filters]).to_s)).to eq("salesinvoice/SalesInvoices?$filter=ID+eq+guid'23'")
     end
 
     it "should apply no filters for find_all" do
       resource = Elmas::Invoice.new(id: "23", journal: "22")
-      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices")
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
       resource = Elmas::Invoice.new(id: "23", journal: "22")
-      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?$filter=journal eq '22'&$filter=ID eq guid'23'")
-      resource.find_by([:journal, :id])
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?$filter=journal+eq+'22'&$filter=ID+eq+guid'23'")
+      resource.find_by(filters: [:journal, :id])
     end
   end
 end

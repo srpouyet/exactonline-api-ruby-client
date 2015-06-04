@@ -11,23 +11,43 @@ module Elmas
     def initialize(attributes = {})
       @attributes = Utils.normalize_hash(attributes)
       @filters = STANDARD_FILTERS
+      @query = []
     end
 
     def base_path
       Utils.collection_path self.class.name
     end
 
-    def url
-      apply_filters(base_path)
+    def uri(options = {})
+      options.each do |option|
+        self.send("apply_#{option}".to_sym)
+      end
+      uri = URI(base_path)
+      uri.query = URI.encode_www_form(@query)
+      uri
     end
 
-    def find_all
-      find(base_path)
+    def find_all(options = {})
+      @order_by = options[:order_by]
+      @select = options[:select]
+      get(uri([:order, :select]))
+    end
+
+    # Pass filters in an array, for example [:id, :name]
+    def find_by(options = {})
+      @filters = options[:filters]
+      @order_by = options[:order_by]
+      @select = options[:select]
+      get(uri([:order, :select, :filters]))
+    end
+
+    def find(uri = self.uri)
+      get(uri([:filters]))
     end
 
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
-    def find(url = self.url)
-      @response = Elmas.get(url)
+    def get(uri = self.uri)
+      @response = Elmas.get(URI.unescape(uri.to_s))
     end
 
     def valid?
@@ -40,12 +60,6 @@ module Elmas
 
     def has_id?
       !@attributes[:id].nil?
-    end
-
-    # Pass filters in an array, for example [:id, :name]
-    def find_by(filters)
-      @filters = filters
-      find
     end
 
     def save
@@ -76,23 +90,30 @@ module Elmas
     end
 
     # ?$filter=ID eq guid'#{id}'
-    def id_filter(sign)
-      "#{sign}$filter=ID eq guid'#{id}'"
+    def id_filter
+      ["$filter", "ID eq guid'#{id}'"]
     end
 
-    def base_filter(sign, attribute)
+    def base_filter(attribute)
       if attribute == :id
-        id_filter(sign)
+        return id_filter
       else
-        "#{sign}$filter=#{attribute} eq '#{@attributes[attribute]}'"
+        return ["$filter", "#{attribute} eq '#{@attributes[attribute]}'"]
       end
     end
 
-    def apply_filters(path)
+    def apply_filters
       @filters.each_with_index do |filter, index|
-        path += base_filter(sign(index), filter)
+        @query << base_filter(filter)
       end
-      path
+    end
+
+    def apply_order
+
+    end
+
+    def apply_select
+
     end
 
     def sign(index)
