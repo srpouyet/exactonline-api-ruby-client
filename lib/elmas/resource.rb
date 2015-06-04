@@ -38,6 +38,10 @@ module Elmas
       valid
     end
 
+    def has_id?
+      !@attributes[:id].nil?
+    end
+
     # Pass filters in an array, for example [:id, :name]
     def find_by(filters)
       @filters = filters
@@ -47,7 +51,11 @@ module Elmas
     def save
       attributes_to_submit = sanitize
       if valid?
-        @response = Elmas.post(base_path, params: attributes_to_submit)
+        if has_id?
+          return @response = Elmas.put(base_path, params: attributes_to_submit)
+        else
+          return @response = Elmas.post(base_path, params: attributes_to_submit)
+        end
       else
         Elmas::Response.new
         # TODO: log "Resource is not valid, you should add some more attributes"

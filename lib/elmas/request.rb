@@ -47,7 +47,7 @@ module Elmas
 
       response = connection.send(method) do |request|
         case method
-        when :post
+        when :post, :put
           request.url path
           request.body = options[:params].to_json
         when :get

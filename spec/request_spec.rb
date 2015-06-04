@@ -50,7 +50,12 @@ describe Elmas::Request do
   end
 
   it "does a put request" do
-
+    params = { id: 1, first_name: "Karel", last_name: "Appel", account: 1 }
+    stub_request(:put, "https://start.exactonline.nl/api/v1/2332/crm/Contacts").
+            with(body: params.to_json)
+    resource = Elmas::Contact.new(params)
+    response = resource.save
+    expect(response).to be_a(Elmas::Response)
   end
 
   it "does a delete request" do
