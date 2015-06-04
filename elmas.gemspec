@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday_middleware", [">= 0.8", "< 0.10"]
   spec.add_dependency "oauth2", "1.0.0"
   spec.add_dependency "mechanize", "2.7.3"
+  spec.add_dependency "typhoeus"
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"

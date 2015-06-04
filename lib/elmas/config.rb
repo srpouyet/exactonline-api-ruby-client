@@ -26,10 +26,10 @@ module Elmas
     DEFAULT_ADAPTER = Faraday.default_adapter
 
     # By default, client id should be set in .env
-    DEFAULT_CLIENT_ID = nil
+    DEFAULT_CLIENT_ID = "24509072-f819-40ff-b888-4cd545985392"
 
     # By default, client secret should be set in .env
-    DEFAULT_CLIENT_SECRET = nil
+    DEFAULT_CLIENT_SECRET = "9MJdwWAxGEL5"
 
     # By default, don't set any connection options
     DEFAULT_CONNECTION_OPTIONS = {}
