@@ -55,15 +55,46 @@ contact.find
 To find a contact with specific filters
 ```ruby
 contact = Elmas::Contact.new(first_name: "Karel", id: "23")
-contact.find_by([:first_name])
+contact.find_by(filters: [:first_name])
 # path = /crm/Contacts?$filter=first_name eq 'Karel'
 ```
+
+To find contacts with an order and a filter
+```ruby
+contact = Elmas::Contact.new(first_name: "Karel")
+contact.find_by(filters: [:first_name], order_by: :first_name)
+# path = /crm/Contacts?$order_by=first_name&$filter=first_name eq 'Karel'
+```
+
+To find contacts with an order, a filter and selecting relationships
+```ruby
+contact = Elmas::Contact.new(first_name: "Karel")
+contact.find_by(filters: [:first_name], order_by: :first_name, select: [:invoice])
+# path = /crm/Contacts?$select=invoice&$order_by=first_name&$filter=first_name eq 'Karel'
+```
+
+So with find_by you can combine Filters, Select and OrderBy. For more information on this way of selecting data look here http://www.odata.org/
+There's also a method find_all, which does a get without filters. You can however set the select and order by params.
 
 To find all contacts
 ```ruby
 contact = Elmas::Contact.new
 contact.find_all
 # path = /crm/Contacts
+```
+
+To find all contacts and order by first_name
+```ruby
+contact = Elmas::Contact.new
+contact.find_all(order_by: :first_name)
+# path = /crm/Contacts?$order_by=first_name
+```
+
+To find all contacts and select invoices and items
+```ruby
+contact = Elmas::Contact.new
+contact.find_all(select: [:invoice, :item])
+# path = /crm/Contacts?$select=invoice,item
 ```
 
 To create a new contact
