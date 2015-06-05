@@ -18,7 +18,7 @@ module Elmas
     ].freeze
 
     # By default, don't set a user access token
-    DEFAULT_ACCESS_TOKEN = nil
+    DEFAULT_ACCESS_TOKEN = ""
 
     # The adapter that will be used to connect if none is set
     #
@@ -34,7 +34,7 @@ module Elmas
     # By default, don't set any connection options
     DEFAULT_CONNECTION_OPTIONS = {}
 
-    DEFAULT_BASE_URL = "https://start.exactonline.nl/api/v1"
+    DEFAULT_BASE_URL = "https://start.exactonline.nl/"
 
     # The endpoint that will be used to connect if none is set
     DEFAULT_ENDPOINT = "/api/v1".freeze

@@ -25,8 +25,7 @@ module Elmas
       results = []
       if parsed.results.any?
         parsed.results.each do |attributes|
-          constant_name = Utils.modulize(type)
-          klass = Object.const_get(constant_name)
+          klass = resolve_class
           results << klass.send(:new, attributes)
         end
       end
@@ -66,5 +65,14 @@ module Elmas
     UNAUTHORIZED_CODES = [
       401, 402, 403
     ]
+
+    private
+
+    def resolve_class
+      constant_name = Utils.modulize(type)
+      return Object.const_get(constant_name)
+    rescue NameError
+      return Class.new { include Elmas::Resource }
+    end
   end
 end
