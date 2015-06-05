@@ -10,7 +10,7 @@ module Elmas
     end
 
     def success?
-      @response.success?
+      @response.success? || SUCCESS_CODES.include?(status)
     end
 
     def body
@@ -47,11 +47,11 @@ module Elmas
     end
 
     def fail?
-      ERROR_CODES.include? @response.status
+      ERROR_CODES.include? status
     end
 
     def unauthorized?
-      UNAUTHORIZED_CODES.include? @response.status
+      UNAUTHORIZED_CODES.include? status
     end
 
     SUCCESS_CODES = [
