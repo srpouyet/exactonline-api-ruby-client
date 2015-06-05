@@ -127,6 +127,21 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
+## Testing
+
+We use Rspec for normal unit testing. We aim for coverage above 90%. Also the current suite should succeed when you commit something.
+We use Rubocop for style checking, this should also succeed before you commit anything.
+
+We're also experimenting with Mutation testing, which alters your code to test if your specs fail when there's faulty code. This is important when you
+alter a vital part of the code, make sure the mutation percentage is higher than 80%. To run a part of the code with mutant run the follwing
+`mutant --include lib/elmas --require elmas --use rspec Elmas::ClassYoureWorkingOn`
+
+To test the vital classes run this
+`mutant --include lib --require elmas --use rspec Elmas::Response Elmas::Client Elmas::Utils Elmas::Resource Elmas::Request Elmas::Parser Elmas::Config`
+This will take a few minutes
+
+When you're editing code it's advised you run guard, which watches file changes and automatically runs Rspec and Rubocop.
+
 ## Hoppinger
 
 This gem was created by [Hoppinger](http://www.hoppinger.com)
