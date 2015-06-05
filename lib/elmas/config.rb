@@ -46,7 +46,6 @@ module Elmas
     #
     DEFAULT_FORMAT = :json
 
-    # By default, don't set an application redirect uri
     DEFAULT_REDIRECT_URI = "https://www.getpostman.com/oauth2/callback"
 
     # By default, don't set user agent

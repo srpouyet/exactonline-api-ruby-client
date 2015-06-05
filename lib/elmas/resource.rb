@@ -32,6 +32,7 @@ module Elmas
     end
 
     def find
+      return nil unless id?
       get(uri([:filters]))
     end
 

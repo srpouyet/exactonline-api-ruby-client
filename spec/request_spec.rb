@@ -32,6 +32,11 @@ describe Elmas::Request do
     expect(Elmas.get("resource", no_division: true)).to be_a(Elmas::Response)
   end
 
+  it "returns nill if id is not set and find is called" do
+    resource = Elmas::Contact.new
+    expect(resource.find).to eq(nil)
+  end
+
   it "does a get request with params" do
     random_id = rand(999).to_s
     stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices?$filter=ID%20eq%20guid'#{random_id}'")
