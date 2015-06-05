@@ -67,6 +67,11 @@ module Elmas
       end
     end
 
+    def delete
+      return nil unless id?
+      Elmas.delete(uri([:filters]))
+    end
+
     # Parse the attributes for to post to the API
     def sanitize
       to_submit = {}

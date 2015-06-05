@@ -64,6 +64,11 @@ describe Elmas::Request do
   end
 
   it "does a delete request" do
-
+    random_id = rand(999).to_s
+    params = { id: random_id }
+    stub_request(:delete, "https://start.exactonline.nl/api/v1/2332/crm/Contacts?$filter=ID%20eq%20guid'#{random_id}'")
+    resource = Elmas::Contact.new(params)
+    response = resource.delete
+    expect(response).to be_a(Elmas::Response)
   end
 end

@@ -49,7 +49,7 @@ module Elmas
         when :post, :put
           request.url path
           request.body = options[:params].to_json
-        when :get
+        when :get, :delete
           request.url path
         end
         request.headers = add_headers
