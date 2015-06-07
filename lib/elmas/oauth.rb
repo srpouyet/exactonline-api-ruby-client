@@ -7,14 +7,23 @@ require "typhoeus"
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
   module OAuth
+    # TODO: (dunyakirkali) this function is too long
     def authorize(user_name, password, options = {})
       agent = Mechanize.new
+      # Login
       agent.get(authorize_url(options)) do |page|
         form = page.forms.first
         form["UserNameField"] = user_name
         form["PasswordField"] = password
         form.click_button
       end
+      # Allow access
+      unless agent.page.uri.to_s.include?("getpostman")
+        form = agent.page.form_with(id: "PublicOAuth2Form")
+        button = form.button_with(id: "AllowButton")
+        agent.submit(form, button)
+      end
+      # Fetch acess token
       code = URI.unescape(agent.page.uri.query.split("=").last)
       uri = agent.page.uri.to_s
       get_access_token(code, uri)
