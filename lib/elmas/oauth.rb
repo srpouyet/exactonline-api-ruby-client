@@ -46,7 +46,6 @@ module Elmas
         faraday.response :detailed_logger
       end
       params = access_token_params(code, uri)
-      # binding.pry
       conn.post do |req|
         req.url "/api/oauth2/token"
         req.body = params
