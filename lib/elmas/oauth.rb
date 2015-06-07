@@ -1,11 +1,9 @@
 require "mechanize"
 require "uri"
 require File.expand_path("../utils", __FILE__)
-require "pry"
 require "faraday/detailed_logger"
 require "typhoeus"
 
-## DOES NOT WORK, CONFIGURE WITH OTHERWISE OBTAINED CODE RIGHT NOW
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
   module OAuth
