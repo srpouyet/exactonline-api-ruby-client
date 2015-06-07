@@ -45,7 +45,7 @@ module Elmas
         faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
         faraday.response :detailed_logger
       end
-      params = access_token_params(code, uri)
+      params = access_token_params(code)
       conn.post do |req|
         req.url "/api/oauth2/token"
         req.body = params
@@ -62,13 +62,13 @@ module Elmas
       }
     end
 
-    def access_token_params(code, uri)
+    def access_token_params(code)
       {
         client_id: client_id,
         client_secret: client_secret,
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: uri
+        redirect_uri: redirect_uri
       }
     end
   end
