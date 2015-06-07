@@ -55,15 +55,19 @@ module Elmas
     private
 
     def authorization_params
-      client_id: client_id
+      {
+        client_id: client_id
+      }
     end
 
     def access_token_params(code)
-      client_id: client_id,
-      client_secret: client_secret,
-      grant_type: "authorization_code",
-      code: code,
-      redirect_uri: redirect_uri
+      {
+        client_id: client_id,
+        client_secret: client_secret,
+        grant_type: "authorization_code",
+        code: code,
+        redirect_uri: redirect_uri
+      }
     end
   end
 end
