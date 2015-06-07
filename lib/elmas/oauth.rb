@@ -17,16 +17,13 @@ module Elmas
         form["PasswordField"] = password
         form.click_button
       end
+
       # Allow access
-      unless agent.page.uri.to_s.include?("getpostman")
-        form = agent.page.form_with(id: "PublicOAuth2Form")
-        button = form.button_with(id: "AllowButton")
-        agent.submit(form, button)
-      end
+      allow_access(agent)
+
       # Fetch acess token
       code = URI.unescape(agent.page.uri.query.split("=").last)
-      uri = agent.page.uri.to_s
-      get_access_token(code, uri)
+      get_access_token(code)
     end
 
     def authorized?
@@ -46,7 +43,7 @@ module Elmas
     end
 
     # Return an access token from authorization
-    def get_access_token(code, uri, _options = {})
+    def get_access_token(code, _options = {})
       conn = Faraday.new(url: "https://start.exactonline.nl") do |faraday|
         faraday.request :url_encoded             # form-encode POST params
         faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
@@ -62,6 +59,13 @@ module Elmas
     end
 
     private
+
+    def allow_access(agent)
+      return if agent.page.uri.to_s.include?("getpostman")
+      form = agent.page.form_with(id: "PublicOAuth2Form")
+      button = form.button_with(id: "AllowButton")
+      agent.submit(form, button)
+    end
 
     def authorization_params
       {
