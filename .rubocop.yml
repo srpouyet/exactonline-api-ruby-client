@@ -48,3 +48,5 @@ Style/PerlBackrefs:
   Enabled: false
 Lint/AmbiguousOperator:
   Enabled: false
+Rails/Delegate:
+  Enabled: false

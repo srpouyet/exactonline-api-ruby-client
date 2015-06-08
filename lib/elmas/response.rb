@@ -72,6 +72,7 @@ module Elmas
       constant_name = Utils.modulize(type)
       return Object.const_get(constant_name)
     rescue NameError
+      Elmas.info("Unknown resource encountered, proceed as usual but further resource details might have to be implemented")
       return Class.new { include Elmas::Resource }
     end
   end
