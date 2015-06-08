@@ -8,8 +8,8 @@ describe Elmas::Contact do
 
   it "accepts attribute setter" do
     contact = Elmas::Contact.new
-    contact.birth_name = "Karel"
-    expect(contact.birth_name).to eq "Karel"
+    contact.first_name = "Karel"
+    expect(contact.first_name).to eq "Karel"
   end
 
   it "returns value for getters" do

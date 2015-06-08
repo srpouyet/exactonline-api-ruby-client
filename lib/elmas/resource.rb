@@ -62,8 +62,8 @@ module Elmas
           return @response = Elmas.post(base_path, params: attributes_to_submit)
         end
       else
-        Elmas::Response.new(nil)
-        # TODO: log "Resource is not valid, you should add some more attributes"
+        Elmas.error("Invalid Resource #{self.class.name}, attributes: #{@attributes.inspect}")
+        Elmas::Response.new(Faraday::Response.new(status: 400, body: "Invalid Request"))
       end
     end
 
@@ -76,7 +76,7 @@ module Elmas
     def sanitize
       to_submit = {}
       @attributes.each do |key, value|
-        next if key == :id || !valid_params.include?(key)
+        next if key == :id || !valid_attribute?(key)
         key = Utils.parse_key(key)
         value.is_a?(Elmas::Resource) ? submit_value = value.id : submit_value = value # Turn relation into ID
         to_submit[key] = submit_value
@@ -88,7 +88,7 @@ module Elmas
     def method_missing(method, *args, &block)
       yield if block
       if /^(\w+)=$/ =~ method
-        @attributes[$1.to_sym] = args[0]
+        set_attribute($1, args[0])
       else
         nil unless @attributes[method.to_sym]
       end
@@ -97,8 +97,16 @@ module Elmas
 
     private
 
-    def valid_params
-      mandatory_attributes.inject(other_attributes, :<<)
+    def set_attribute(attribute, value)
+      @attributes[attribute.to_sym] = value if valid_attribute?(attribute)
+    end
+
+    def valid_attribute?(attribute)
+      valid_attributes.include?(attribute.to_sym)
+    end
+
+    def valid_attributes
+      @valid_attributes ||= mandatory_attributes.inject(other_attributes, :<<)
     end
   end
 end

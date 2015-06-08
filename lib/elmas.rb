@@ -3,13 +3,16 @@ require "elmas/api"
 require "elmas/config"
 require "elmas/response"
 require "elmas/client"
+require "elmas/log"
 require "elmas/resource"
 require "elmas/resources/contact"
 require "elmas/resources/invoice"
 require "elmas/resources/invoice_line"
+require "elmas/resources/account"
 
 module Elmas
   extend Config
+  extend Log
 
   def self.client(options = {})
     Elmas::Client.new(options)
