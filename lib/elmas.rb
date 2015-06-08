@@ -7,7 +7,6 @@ require "elmas/resource"
 require "elmas/resources/contact"
 require "elmas/resources/invoice"
 require "elmas/resources/invoice_line"
-require "oauth2"
 
 module Elmas
   extend Config

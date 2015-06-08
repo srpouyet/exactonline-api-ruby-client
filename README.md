@@ -39,7 +39,7 @@ end
 # otherwise authorization should be called again.
 unless Elmas.authorized?
   Elmas.configure do |config|
-    config.access_token = Elmas.authorize(ENV['user_name'], ENV['password'])
+    config.access_token = Elmas.authorize(ENV['user_name'], ENV['password']).access_token
   end
 end
 ```

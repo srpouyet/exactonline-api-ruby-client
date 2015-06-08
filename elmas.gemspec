@@ -20,14 +20,14 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "faraday", [">= 0.8", "< 0.10"]
   spec.add_dependency "faraday_middleware", [">= 0.8", "< 0.10"]
-  spec.add_dependency "oauth2", "1.0.0"
   spec.add_dependency "mechanize", "2.7.3"
-  spec.add_dependency "typhoeus"
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency("rspec", "~> 3.0")
   spec.add_development_dependency("pry", ">= 0.0")
+  spec.add_development_dependency("simplecov")
+  spec.add_development_dependency("simplecov-rcov")
   spec.add_development_dependency("webmock", "~> 1.6")
   spec.add_development_dependency("rubycritic", "~> 1.4.0")
   spec.add_development_dependency("guard-rspec")
