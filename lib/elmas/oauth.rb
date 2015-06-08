@@ -2,7 +2,6 @@ require "mechanize"
 require "uri"
 require File.expand_path("../utils", __FILE__)
 require "faraday/detailed_logger"
-require "typhoeus"
 
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
@@ -45,8 +44,8 @@ module Elmas
     # Return an access token from authorization
     def get_access_token(code, _options = {})
       conn = Faraday.new(url: "https://start.exactonline.nl") do |faraday|
-        faraday.request :url_encoded             # form-encode POST params
-        faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
+        faraday.request :url_encoded
+        faraday.adapter Faraday.default_adapter
       end
       params = access_token_params(code)
       conn.post do |req|
@@ -54,7 +53,6 @@ module Elmas
         req.body = params
         req.headers["Accept"] = "application/json"
       end
-      # Typhoeus.post("https://start.exactonline.nl/api/oauth2/token", body: params)
     end
 
     private
