@@ -37,7 +37,7 @@ describe Elmas::Contact do
 
     it "should apply given filters for find_by" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$filter=name+eq+'Karel'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$filter=Name+eq+'Karel'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:name, :id])
     end
   end
@@ -45,13 +45,13 @@ describe Elmas::Contact do
   context "Applying order" do
     it "should apply the order_by and filters" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=name&$filter=name+eq+'Karel'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=Name&$filter=Name+eq+'Karel'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:name, :id], order_by: :name)
     end
 
     it "should only apply the order_by" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=name")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=Name")
       resource.find_all(order_by: :name)
     end
   end
@@ -59,19 +59,19 @@ describe Elmas::Contact do
   context "Applying select" do
     it "should apply one select" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$select=name")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$select=Name")
       resource.find_all(select: [:name])
     end
 
     it "should apply one select with find_by" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$select=name")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$select=Name")
       resource.find_by(select: [:name])
     end
 
     it "should apply one select" do
       resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$select=name,age")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$select=Name,Age")
       resource.find_all(select: [:name, :age])
     end
   end

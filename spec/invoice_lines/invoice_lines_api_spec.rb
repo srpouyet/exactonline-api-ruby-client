@@ -30,7 +30,7 @@ describe Elmas::InvoiceLine do
 
     it "should apply given filters for find_by" do
       resource = Elmas::InvoiceLine.new(id: "23", item: "22")
-      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoiceLines?$filter=item+eq+'22'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoiceLines?$filter=Item+eq+'22'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:item, :id])
     end
   end

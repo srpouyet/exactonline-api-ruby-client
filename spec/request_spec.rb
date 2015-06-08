@@ -48,7 +48,7 @@ describe Elmas::Request do
   it "does a post request" do
     params = { first_name: "Piet", last_name: "Mondriaan", account: 1 }
     stub_request(:post, "https://start.exactonline.nl/api/v1/2332/crm/Contacts").
-            with(body: params.to_json)
+            with(body: { "FirstName" => "Piet", "LastName" => "Mondriaan", "Account" => 1 }.to_json)
     resource = Elmas::Contact.new(params)
     response = resource.save
     expect(response).to be_a(Elmas::Response)
@@ -56,8 +56,8 @@ describe Elmas::Request do
 
   it "does a put request" do
     params = { id: 1, first_name: "Karel", last_name: "Appel", account: 1 }
-    stub_request(:put, "https://start.exactonline.nl/api/v1/2332/crm/Contacts").
-            with(body: params.to_json)
+    stub_request(:put, "https://start.exactonline.nl/api/v1/2332/crm/Contacts(guid'1')").
+            with(body: { "FirstName" => "Karel", "LastName" => "Appel", "Account" => 1 }.to_json)
     resource = Elmas::Contact.new(params)
     response = resource.save
     expect(response).to be_a(Elmas::Response)
@@ -66,7 +66,7 @@ describe Elmas::Request do
   it "does a delete request" do
     random_id = rand(999).to_s
     params = { id: random_id }
-    stub_request(:delete, "https://start.exactonline.nl/api/v1/2332/crm/Contacts?$filter=ID%20eq%20guid'#{random_id}'")
+    stub_request(:delete, "https://start.exactonline.nl/api/v1/2332/crm/Contacts(guid'#{random_id}')")
     resource = Elmas::Contact.new(params)
     response = resource.delete
     expect(response).to be_a(Elmas::Response)

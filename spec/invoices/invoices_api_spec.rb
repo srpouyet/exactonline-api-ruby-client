@@ -20,7 +20,7 @@ describe Elmas::Invoice do
     journal = "another-awesome-journal"
     id = "232878"
     invoice = Elmas::Invoice.new(journal: journal, ordered_by: Elmas::Contact.new(first_name: "Karel", last_name: "Appel", id: id))
-    expect(invoice.sanitize).to eq({ journal: journal, ordered_by: id })
+    expect(invoice.sanitize).to eq({"Journal" => journal, "OrderedBy" => id })
   end
 
   context "Applying filters" do
@@ -37,7 +37,7 @@ describe Elmas::Invoice do
 
     it "should apply given filters for find_by" do
       resource = Elmas::Invoice.new(id: "23", journal: "22")
-      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?$filter=journal+eq+'22'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?$filter=Journal+eq+'22'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:journal, :id])
     end
   end

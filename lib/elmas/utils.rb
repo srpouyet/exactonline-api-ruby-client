@@ -39,5 +39,9 @@ module Elmas
     def self.normalize_hash(hash)
       Hash[hash.map { |k, v| [Utils.normalize_hash_key(k), v] }]
     end
+
+    def self.parse_key(key)
+      Utils.camelize(key)
+    end
   end
 end

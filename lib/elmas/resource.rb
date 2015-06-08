@@ -57,30 +57,29 @@ module Elmas
       attributes_to_submit = sanitize
       if valid?
         if id?
-          return @response = Elmas.put(base_path, params: attributes_to_submit)
+          return @response = Elmas.put(basic_identifier_uri, params: attributes_to_submit)
         else
           return @response = Elmas.post(base_path, params: attributes_to_submit)
         end
       else
-        Elmas::Response.new
+        Elmas::Response.new(nil)
         # TODO: log "Resource is not valid, you should add some more attributes"
       end
     end
 
     def delete
       return nil unless id?
-      Elmas.delete(uri([:filters]))
+      Elmas.delete(basic_identifier_uri)
     end
 
     # Parse the attributes for to post to the API
     def sanitize
       to_submit = {}
       @attributes.each do |key, value|
-        if value.is_a? Elmas::Resource # Turn relation into ID
-          to_submit["#{key}".to_sym] = value.id
-        else
-          to_submit[key] = value
-        end
+        next if key == :id
+        key = Utils.parse_key(key)
+        value.is_a?(Elmas::Resource) ? submit_value = value.id : submit_value = value # Turn relation into ID
+        to_submit[key] = submit_value
       end
       to_submit
     end

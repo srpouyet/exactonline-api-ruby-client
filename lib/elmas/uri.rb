@@ -23,7 +23,7 @@ module Elmas
         if attribute == :id
           return id_filter
         else
-          return ["$filter", "#{attribute} eq '#{@attributes[attribute]}'"]
+          return ["$filter", "#{Utils.camelize(attribute)} eq '#{@attributes[attribute]}'"]
         end
       end
 
@@ -34,12 +34,16 @@ module Elmas
         end
       end
 
+      def basic_identifier_uri
+        "#{base_path}(guid'#{id}')"
+      end
+
       def apply_order
-        @query << ["$order_by", @order_by.to_s] if @order_by
+        @query << ["$order_by", Utils.camelize(@order_by.to_s)] if @order_by
       end
 
       def apply_select
-        @query << ["$select", @select.join(",")] if @select
+        @query << ["$select", (@select.map { |s| Utils.camelize(s) }.join(","))] if @select
       end
     end
   end
