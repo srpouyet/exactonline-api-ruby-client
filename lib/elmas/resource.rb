@@ -8,7 +8,7 @@ module Elmas
 
     STANDARD_FILTERS = [:id].freeze
 
-    attr_accessor :attribute, :url
+    attr_accessor :attributes, :url
     attr_reader :response
 
     def initialize(attributes = {})
@@ -23,7 +23,7 @@ module Elmas
       get(uri([:order, :select]))
     end
 
-    # Pass filters in an array, for example [:id, :name]
+    # Pass filters in an array, for example 'filters: [:id, :name]'
     def find_by(options = {})
       @filters = options[:filters]
       @order_by = options[:order_by]
