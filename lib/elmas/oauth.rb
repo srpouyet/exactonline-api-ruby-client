@@ -86,8 +86,16 @@ end
 
 module Elmas
   class OauthResponse < Response
+    def body
+      JSON.parse(@response.body)
+    end
+
     def access_token
-      JSON.parse(body)["access_token"]
+      body["access_token"]
+    end
+
+    def refresh_token
+      body["refresh_token"]
     end
   end
 end

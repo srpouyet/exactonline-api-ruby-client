@@ -14,11 +14,14 @@ module Elmas
       :user_agent,
       :endpoint,
       :division,
-      :base_url
+      :base_url,
+      :refresh_token
     ].freeze
 
     # By default, don't set a user access token
     DEFAULT_ACCESS_TOKEN = ""
+
+    DEFAULT_REFRESH_TOKEN = ""
 
     # The adapter that will be used to connect if none is set
     #
@@ -26,10 +29,10 @@ module Elmas
     DEFAULT_ADAPTER = Faraday.default_adapter
 
     # By default, client id should be set in .env
-    DEFAULT_CLIENT_ID = "24509072-f819-40ff-b888-4cd545985392"
+    DEFAULT_CLIENT_ID = ""
 
     # By default, client secret should be set in .env
-    DEFAULT_CLIENT_SECRET = "9MJdwWAxGEL5"
+    DEFAULT_CLIENT_SECRET = ""
 
     # By default, don't set any connection options
     DEFAULT_CONNECTION_OPTIONS = {}
@@ -87,6 +90,7 @@ module Elmas
       self.base_url           = DEFAULT_BASE_URL
       self.response_format    = DEFAULT_FORMAT
       self.user_agent         = DEFAULT_USER_AGENT
+      self.refresh_token      = DEFAULT_REFRESH_TOKEN
     end
   end
 end

@@ -11,4 +11,6 @@ require "elmas"
 # Pry.start
 
 require "irb"
+require "dotenv"
+Dotenv.load
 IRB.start

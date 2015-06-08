@@ -11,5 +11,9 @@ module Elmas
     def mandatory_attributes
       [:journal, :ordered_by]
     end
+
+    def other_attributes
+      []
+    end
   end
 end

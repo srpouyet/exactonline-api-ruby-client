@@ -10,5 +10,9 @@ module Elmas
     def mandatory_attributes
       [:first_name, :last_name, :account]
     end
+
+    def other_attributes
+      []
+    end
   end
 end

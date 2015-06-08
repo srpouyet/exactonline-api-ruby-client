@@ -29,9 +29,9 @@ Then configure Elmas like this
 
 ```ruby
 Elmas.configure do |config|
-  config.client_id = ENV['client_id'],
-  config.client_secret = ENV['client_secret']
-  config.access_token = Elmas.authorize(ENV['user_name'], ENV['password'])
+  config.client_id = ENV['CLIENT_ID']
+  config.client_secret = ENV['CLIENT_SECRET']
+  config.access_token = Elmas.authorize(ENV['EXACT_USER_NAME'], ENV['EXACT_PASSWORD']).access_token
 end
 
 #The client will now be authorized for 10 minutes,
@@ -39,7 +39,7 @@ end
 # otherwise authorization should be called again.
 unless Elmas.authorized?
   Elmas.configure do |config|
-    config.access_token = Elmas.authorize(ENV['user_name'], ENV['password']).access_token
+    config.access_token = Elmas.authorize(ENV['EXACT_USER_NAME'], ENV['EXACT_PASSWORD']).access_token
   end
 end
 ```

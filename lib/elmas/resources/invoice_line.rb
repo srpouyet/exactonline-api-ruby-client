@@ -10,5 +10,9 @@ module Elmas
     def mandatory_attributes
       [:invoice_id, :item]
     end
+
+    def other_attributes
+      []
+    end
   end
 end

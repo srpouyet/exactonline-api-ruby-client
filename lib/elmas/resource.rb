@@ -76,7 +76,7 @@ module Elmas
     def sanitize
       to_submit = {}
       @attributes.each do |key, value|
-        next if key == :id
+        next if key == :id || !valid_params.include?(key)
         key = Utils.parse_key(key)
         value.is_a?(Elmas::Resource) ? submit_value = value.id : submit_value = value # Turn relation into ID
         to_submit[key] = submit_value
@@ -93,6 +93,12 @@ module Elmas
         nil unless @attributes[method.to_sym]
       end
       @attributes[method.to_sym]
+    end
+
+    private
+
+    def valid_params
+      mandatory_attributes.inject(other_attributes, :<<)
     end
   end
 end
