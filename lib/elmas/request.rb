@@ -1,5 +1,3 @@
-require "pry"
-require "faraday/detailed_logger"
 module Elmas
   # Defines HTTP request methods
   module Request

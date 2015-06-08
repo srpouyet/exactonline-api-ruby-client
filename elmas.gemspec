@@ -6,26 +6,22 @@ require 'elmas/version'
 Gem::Specification.new do |spec|
   spec.name          = "elmas"
   spec.authors       = ["Marthyn"]
-  spec.email         = ["Marthyn@hoppinger.nl"]
+  spec.email         = ["MarthynOlthof@hoppinger.nl"]
 
   spec.summary       = %q{API wrapper for Exact Online}
   spec.homepage      = "https://www.hoppinger.com"
   spec.licenses      = %w(MIT)
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }
   spec.require_paths = %w(lib)
-  spec.version       = Elmas::Version
+  spec.version       = Elmas::Version.to_s
 
   spec.add_dependency "faraday", [">= 0.8", "< 0.10"]
-  spec.add_dependency "faraday_middleware", [">= 0.8", "< 0.10"]
   spec.add_dependency "mechanize", "2.6.0"
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency("rspec", "~> 3.0")
-  spec.add_development_dependency("pry", ">= 0.0")
   spec.add_development_dependency("simplecov")
   spec.add_development_dependency("simplecov-rcov")
   spec.add_development_dependency("webmock", "~> 1.6")
@@ -34,5 +30,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("guard-rubocop")
   spec.add_development_dependency("mutant-rspec")
   spec.add_development_dependency("dotenv")
-  spec.add_dependency("faraday-detailed_logger")
 end

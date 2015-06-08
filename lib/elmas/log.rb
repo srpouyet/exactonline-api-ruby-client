@@ -1,4 +1,5 @@
 require "logger"
+
 module Elmas
   module Log
     def logger

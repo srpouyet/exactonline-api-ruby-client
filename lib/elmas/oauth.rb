@@ -1,8 +1,8 @@
 require "mechanize"
 require "uri"
+
 require File.expand_path("../utils", __FILE__)
 require File.expand_path("../response", __FILE__)
-require "faraday/detailed_logger"
 
 # from https://developers.exactonline.com/#Example retrieve access token.html
 module Elmas
