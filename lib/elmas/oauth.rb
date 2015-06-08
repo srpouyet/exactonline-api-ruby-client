@@ -1,6 +1,7 @@
 require "mechanize"
 require "uri"
 require File.expand_path("../utils", __FILE__)
+require File.expand_path("../response", __FILE__)
 require "faraday/detailed_logger"
 
 # from https://developers.exactonline.com/#Example retrieve access token.html
@@ -13,7 +14,7 @@ module Elmas
       allow_access(agent)
 
       code = URI.unescape(agent.page.uri.query.split("=").last)
-      get_access_token(code)
+      OauthResponse.new(get_access_token(code))
     end
 
     def authorized?
@@ -79,6 +80,14 @@ module Elmas
         code: code,
         redirect_uri: redirect_uri
       }
+    end
+  end
+end
+
+module Elmas
+  class OauthResponse < Response
+    def access_token
+      JSON.parse(body)["access_token"]
     end
   end
 end
