@@ -13,7 +13,7 @@ module Elmas
     end
 
     def other_attributes
-      []
+      [:sales_invoice_lines, :type]
     end
   end
 end
