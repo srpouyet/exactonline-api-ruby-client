@@ -23,6 +23,10 @@ module Elmas
       # Do a test call, return false if 401 or any error code
     end
 
+    def authorize_division
+      get("/Current/Me", no_division: true).first.current_division
+    end
+
     # Return URL for OAuth authorization
     def authorize_url(options = {})
       options[:response_type] ||= "code"
@@ -92,6 +96,10 @@ module Elmas
 
     def access_token
       body["access_token"]
+    end
+
+    def division
+      body["division"]
     end
 
     def refresh_token

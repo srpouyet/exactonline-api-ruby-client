@@ -7,6 +7,8 @@ require "elmas/log"
 require "elmas/resource"
 require "elmas/resources/contact"
 require "elmas/resources/invoice"
+require "elmas/resources/journal"
+require "elmas/resources/item"
 require "elmas/resources/invoice_line"
 require "elmas/resources/account"
 

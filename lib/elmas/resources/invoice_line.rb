@@ -8,11 +8,11 @@ module Elmas
     end
 
     def mandatory_attributes
-      [:invoice_id, :item]
+      [:item]
     end
 
     def other_attributes
-      []
+      [:discount, :quantity, :amount_FC, :description, :vat_code]
     end
   end
 end
