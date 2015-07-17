@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["MarthynOlthof@hoppinger.nl"]
 
   spec.summary       = %q{API wrapper for Exact Online}
-  spec.homepage      = "https://www.hoppinger.com"
+  spec.homepage      = "https://github.com/exactonline/exactonline-api-ruby-client"
   spec.licenses      = %w(MIT)
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }

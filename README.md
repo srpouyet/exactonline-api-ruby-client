@@ -1,3 +1,7 @@
+<!-- [![Build Status](https://travis-ci.org/exactonline/exactonline-api-ruby-client.svg?branch=master)](https://travis-ci.org/exactonline/exactonline-api-ruby-client)
+[![Code Climate](https://codeclimate.com/github/exactonline/exactonline-api-ruby-client/badges/gpa.svg)](https://codeclimate.com/github/exactonline/exactonline-api-ruby-client) -->
+[![Version](https://img.shields.io/gem/v/elmas.svg)](https://rubygems.org/gems/elmas)
+
 # Elmas
 
 Elmas means diamond, but in this case it's an API wrapper for [Exact Online](https://developers.exactonline.com/).
