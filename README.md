@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/exactonline/exactonline-api-ruby-client.svg?branch=master)](https://travis-ci.org/exactonline/exactonline-api-ruby-client) 
+[![Build Status](https://travis-ci.org/exactonline/exactonline-api-ruby-client.svg?branch=master)](https://travis-ci.org/exactonline/exactonline-api-ruby-client)
 [![Code Climate](https://codeclimate.com/github/exactonline/exactonline-api-ruby-client/badges/gpa.svg)](https://codeclimate.com/github/exactonline/exactonline-api-ruby-client)
 [![Gem Version](https://badge.fury.io/rb/elmas.svg)](http://badge.fury.io/rb/elmas)
 
@@ -26,8 +26,7 @@ Or install it yourself as:
 
 You have to have an Exact Online account and an app setup to connect with.
 
-You have to set a few variables to make a connection possible. I'd suggest using environment variables set with [dotenv](https://github.com/bkeepers/dotenv) for that. (You can of course hardcode them, but that is not very secure :-) )
-
+You have to set a few variables to make a connection possible. I'd suggest using environment variables set with [dotenv](https://github.com/bkeepers/dotenv) for that.
 
 Then configure Elmas like this
 
@@ -35,6 +34,16 @@ Then configure Elmas like this
 Elmas.configure do |config|
   config.client_id = ENV['CLIENT_ID']
   config.client_secret = ENV['CLIENT_SECRET']
+end
+```
+
+If you only use the api within your app without exposing it to users you can chose
+to automatically login with your credentials. So this is for example when you have a
+rake task that shoots in invoices.
+Do not use this when you let other users login. Build your own OAUTH flow and then set the access token
+before the api request.
+```ruby
+Elmas.configure do |config|
   config.access_token = Elmas.authorize(ENV['EXACT_USER_NAME'], ENV['EXACT_PASSWORD']).access_token
 end
 
@@ -73,8 +82,8 @@ contact.find_by(filters: [:first_name], order_by: :first_name)
 To find contacts with an order, a filter and selecting relationships
 ```ruby
 contact = Elmas::Contact.new(first_name: "Karel")
-contact.find_by(filters: [:first_name], order_by: :first_name, select: [:invoice])
-# path = /crm/Contacts?$select=invoice&$order_by=first_name&$filter=first_name eq 'Karel'
+contact.find_by(filters: [:first_name], order_by: :first_name, select: [:last_name])
+# path = /crm/Contacts?$select=last_name&$order_by=first_name&$filter=first_name eq 'Karel'
 ```
 
 So with find_by you can combine Filters, Select and OrderBy. For more information on this way of selecting data look here http://www.odata.org/
@@ -97,16 +106,19 @@ contact.find_all(order_by: :first_name)
 To find all contacts and select invoices and items
 ```ruby
 contact = Elmas::Contact.new
-contact.find_all(select: [:invoice, :item])
-# path = /crm/Contacts?$select=invoice,item
+contact.find_all(select: [:last_name, :first_name])
+# path = /crm/Contacts?$select=last_name,first_name
 ```
 
 To create a new contact
 
 ```ruby
-contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel", id: "2378712")
+contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel"  )
 contact.save
 ```
+
+For many resources there are mandatory attributes, you can see that in the classes
+for every resource. For example for Contact: https://github.com/exactonline/exactonline-api-ruby-client/blob/master/lib/elmas/resources/contact.rb
 
 ###Divisions and Endpoints
 
