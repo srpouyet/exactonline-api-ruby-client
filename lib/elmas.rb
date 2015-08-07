@@ -17,6 +17,7 @@ require "elmas/resources/sales_entry_line"
 require "elmas/resources/costunit"
 require "elmas/resources/transaction"
 require "elmas/resources/transaction_line"
+require "elmas/resources/document"
 
 module Elmas
   extend Config

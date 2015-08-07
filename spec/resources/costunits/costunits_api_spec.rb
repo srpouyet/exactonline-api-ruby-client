@@ -22,7 +22,6 @@ describe Elmas::Costunit do
     expect(costunit.try(:code)).to eq nil
   end
 
-  #customer journal salesentrylines
   it "is valid with mandatory attributes" do
     costunit = Elmas::Costunit.new(code: "23", description: "tralalala")
     expect(costunit.valid?).to eq(true)
