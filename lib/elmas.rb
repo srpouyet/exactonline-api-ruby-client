@@ -15,6 +15,7 @@ require "elmas/resources/gl_account"
 require "elmas/resources/sales_entry"
 require "elmas/resources/sales_entry_line"
 require "elmas/resources/costunit"
+require "elmas/resources/transaction"
 require "elmas/resources/transaction_line"
 
 module Elmas
