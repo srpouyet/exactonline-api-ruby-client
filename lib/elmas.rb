@@ -11,6 +11,7 @@ require "elmas/resources/journal"
 require "elmas/resources/item"
 require "elmas/resources/invoice_line"
 require "elmas/resources/account"
+require "elmas/resources/gl_account"
 require "elmas/resources/sales_entry"
 require "elmas/resources/sales_entry_line"
 
