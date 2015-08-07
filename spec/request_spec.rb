@@ -71,4 +71,12 @@ describe Elmas::Request do
     response = resource.delete
     expect(response).to be_a(Elmas::Response)
   end
+
+  it "normalizes belongs to relationships" do
+
+  end
+
+  it "normalizes has many relationships" do
+    
+  end
 end
