@@ -13,13 +13,13 @@ describe Elmas::SalesEntry do
   end
 
   it "returns value for getters" do
-    sales_entry = Elmas::SalesEntry.new({ "BirthName" => "Karel" })
-    expect(sales_entry.birth_name).to eq "Karel"
+    sales_entry = Elmas::SalesEntry.new({ "BatchNumber" => "277" })
+    expect(sales_entry.batch_number).to eq "277"
   end
 
   it "crashes and burns when getting an unset attribute" do
     sales_entry = Elmas::SalesEntry.new({ name: "Piet" })
-    expect(sales_entry.try(:birth_name)).to eq nil
+    expect(sales_entry.try(:batch_number)).to eq nil
   end
 
   #customer journal salesentrylines
