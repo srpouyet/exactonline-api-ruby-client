@@ -22,7 +22,7 @@ Or install it yourself as:
 
     $ gem install elmas
 
-## Usage
+## Authorization and Setup
 
 You have to have an Exact Online account and an app setup to connect with.
 
@@ -46,7 +46,32 @@ before the api request.
 Elmas.configure do |config|
   config.access_token = Elmas.authorize(ENV['EXACT_USER_NAME'], ENV['EXACT_PASSWORD']).access_token
 end
+```
+Now you're authorized you can set your current division
+```ruby
+Elmas.configure do |config|
+  config.division = Elmas.authorize_division
+end
+```
 
+So combining all of this results in
+```ruby
+Elmas.configure do |config|
+  config.client_id = ENV['CLIENT_ID']
+  config.client_secret = ENV['CLIENT_SECRET']
+end
+Elmas.configure do |config|
+  config.access_token = Elmas.authorize(ENV['EXACT_USER_NAME'], ENV['EXACT_PASSWORD']).access_token
+end
+Elmas.configure do |config|
+  config.division = Elmas.authorize_division
+end
+```
+
+You should make sure that when you do a request you're authorized. So build in something like the
+following code into your application, that checks wether you're authorized and otherwise authorizes
+again.
+```ruby
 #The client will now be authorized for 10 minutes,
 # if there are requests the time will be reset,
 # otherwise authorization should be called again.
@@ -55,6 +80,23 @@ unless Elmas.authorized?
     config.access_token = Elmas.authorize(ENV['EXACT_USER_NAME'], ENV['EXACT_PASSWORD']).access_token
   end
 end
+```
+
+## GET, PUT, POST requests
+
+For any of the following requests (GET, PUT, POST), to get the results do the following. (the exact API always returns a List)
+```ruby
+contact = Elmas::Contact.new(id: "23445")
+response = contact.find
+puts response.first
+# Prints something like this
+# [<Elmas::Contact:0x007fb0a55782f0 @attributes={:__metadata=>{"uri"=>"https://start.exactonline.nl/api/v1/797636/crm/Contacts(guid'23445')", "type"=>"Exact.Web.Api.Models.Contact"}, :id=>"23445", :person=>"88380fa4-97bc-4ddf-90e3-b0e7befb112c"}>
+
+contact = Elmas::Contact.new.find_all
+response = contact.find_all
+puts response.results
+# Prints something like this
+# [<Elmas::Contact:0x007fb0a55782f0 @attributes={:__metadata=>{"uri"=>"https://start.exactonline.nl/api/v1/797636/crm/Contacts(guid'23445')", "type"=>"Exact.Web.Api.Models.Contact"}, :id=>"23445", :person=>"88380fa4-97bc-4ddf-90e3-b0e7befb112c"}>, <Elmas::Contact:0x007fb0a55782f0 @attributes={:__metadata=>{"uri"=>"https://start.exactonline.nl/api/v1/797636/crm/Contacts(guid'23445')", "type"=>"Exact.Web.Api.Models.Contact"}, :id=>"23445", :person=>"88380fa4-97bc-4ddf-90e3-b0e7befb112c"}>]
 ```
 
 To find a contact

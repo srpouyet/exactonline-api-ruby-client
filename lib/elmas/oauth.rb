@@ -1,5 +1,6 @@
 require "mechanize"
 require "uri"
+require "json"
 
 require File.expand_path("../utils", __FILE__)
 require File.expand_path("../response", __FILE__)
