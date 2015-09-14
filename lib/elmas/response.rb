@@ -73,7 +73,7 @@ module Elmas
     ]
 
     UNAUTHORIZED_CODES = [
-      401, 402, 403
+      400, 401, 402, 403
     ]
 
     private

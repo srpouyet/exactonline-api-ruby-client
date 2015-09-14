@@ -2,6 +2,10 @@ module Elmas
   class Parser
     def initialize(json)
       @object = JSON.parse(json)
+    rescue JSON::ParserError => e
+      Elmas.error("There was an error parsing the response, #{e.message}")
+      @error_message = e.message
+      return false
     end
 
     def results
@@ -9,7 +13,7 @@ module Elmas
     end
 
     def error_message
-      @object["error"]["message"]["value"]
+      @error_message ||= @object["error"]["message"]["value"]
     end
 
     def first_result
