@@ -2,29 +2,23 @@ require 'spec_helper'
 
 describe Elmas::Document do
   it "can initialize" do
-    costunit = Elmas::Document.new
-    expect(costunit).to be_a(Elmas::Document)
-  end
-
-  it "accepts attribute setter" do
-    costunit = Elmas::Document.new
-    costunit.account = "78238"
-    expect(costunit.account).to eq "78238"
+    document = Elmas::Document.new
+    expect(document).to be_a(Elmas::Document)
   end
 
   it "returns value for getters" do
-    costunit = Elmas::Document.new({ "Account" => "345" })
-    expect(costunit.account).to eq "345"
+    document = Elmas::Document.new({ "Account" => "345" })
+    expect(document.account).to eq "345"
   end
 
   it "crashes and burns when getting an unset attribute" do
-    costunit = Elmas::Document.new({ name: "Piet" })
-    expect(costunit.try(:account)).to eq nil
+    document = Elmas::Document.new({ name: "Piet" })
+    expect(document.try(:account)).to eq nil
   end
 
   it "is valid without attributes" do
-    costunit = Elmas::Document.new
-    expect(costunit.valid?).to eq(true)
+    document = Elmas::Document.new
+    expect(document.valid?).to eq(true)
   end
 
   let(:resource) { resource = Elmas::Document.new(id: "23", account: "1223") }

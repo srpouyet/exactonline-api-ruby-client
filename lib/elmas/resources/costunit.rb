@@ -11,7 +11,7 @@ module Elmas
     end
 
     def other_attributes
-      []
+      [:account]
     end
   end
 end

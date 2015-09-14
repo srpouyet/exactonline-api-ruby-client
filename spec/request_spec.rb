@@ -40,7 +40,7 @@ describe Elmas::Request do
   it "does a get request with params" do
     random_id = rand(999).to_s
     stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices?$filter=ID%20eq%20guid'#{random_id}'")
-    resource = Elmas::Invoice.new(id: random_id)
+    resource = Elmas::SalesInvoice.new(id: random_id)
     response = resource.find
     expect(response).to be_a(Elmas::Response)
   end
