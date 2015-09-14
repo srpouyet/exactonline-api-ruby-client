@@ -7,6 +7,7 @@ module Elmas
 
     def initialize(response)
       @response = response
+      log_error if fail?
     end
 
     def success?
@@ -48,6 +49,15 @@ module Elmas
 
     def fail?
       ERROR_CODES.include? status
+    end
+
+    def error_message
+      parsed.error_message
+    end
+
+    def log_error
+      message = "An error occured, the response had status #{status}. The content of the error was: #{error_message}"
+      Elmas.error(message)
     end
 
     def unauthorized?
