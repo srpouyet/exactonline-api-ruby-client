@@ -1,10 +1,9 @@
 module Elmas
-  class SalesEntryLine
-    # A sales entry line belongs to a sales entry
+  class PurchaseEntryLine
     include Elmas::Resource
 
     def base_path
-      "salesentry/SalesEntryLines"
+      "purchaseentry/PurchaseEntryLines"
     end
 
     def mandatory_attributes

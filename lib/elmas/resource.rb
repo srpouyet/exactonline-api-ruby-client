@@ -6,15 +6,17 @@ module Elmas
   module Resource
     include UriMethods
 
-    STANDARD_FILTERS = [:id].freeze
-
     attr_accessor :attributes, :url
     attr_reader :response
 
     def initialize(attributes = {})
       @attributes = Utils.normalize_hash(attributes)
-      @filters = STANDARD_FILTERS
+      @filters = []
       @query = []
+    end
+
+    def id
+      @attributes[:id]
     end
 
     def find_all(options = {})
@@ -33,7 +35,7 @@ module Elmas
 
     def find
       return nil unless id?
-      get(uri([:filters]))
+      get(uri([:id]))
     end
 
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
@@ -78,10 +80,24 @@ module Elmas
       @attributes.each do |key, value|
         next if key == :id || !valid_attribute?(key)
         key = Utils.parse_key(key)
-        value.is_a?(Elmas::Resource) ? submit_value = value.id : submit_value = value # Turn relation into ID
+        submit_value = sanitize_relationship(value)
         to_submit[key] = submit_value
       end
       to_submit
+    end
+
+    def sanitize_relationship(value)
+      if value.is_a?(Elmas::Resource)
+        submit_value = value.id # Turn relation into ID
+      elsif value.is_a?(Array)
+        submit_value = []
+        value.each do |e|
+          submit_value << e.sanitize
+        end
+      else
+        submit_value = value
+      end
+      submit_value
     end
 
     # Getter/Setter for resource

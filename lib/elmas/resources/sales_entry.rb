@@ -13,7 +13,12 @@ module Elmas
     end
 
     def other_attributes
-      [:batch_number]
+      [
+        :batch_number, :currency, :customer, :document, :due_date, :entry_date,
+        :entry_number, :invoice_number, :order_number, :payment_condition,
+        :payment_reference, :process_number, :rate, :reporting_period,
+        :reporting_year, :reversal, :VAT_amount_FC, :your_ref
+      ]
     end
   end
 end

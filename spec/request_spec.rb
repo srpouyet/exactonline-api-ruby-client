@@ -39,8 +39,8 @@ describe Elmas::Request do
 
   it "does a get request with params" do
     random_id = rand(999).to_s
-    stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices?$filter=ID%20eq%20guid'#{random_id}'")
-    resource = Elmas::Invoice.new(id: random_id)
+    stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices(guid'#{random_id}')?")
+    resource = Elmas::SalesInvoice.new(id: random_id)
     response = resource.find
     expect(response).to be_a(Elmas::Response)
   end
@@ -73,10 +73,14 @@ describe Elmas::Request do
   end
 
   it "normalizes belongs to relationships" do
-
+    invoice_line = Elmas::SalesInvoiceLine.new(item: "1", invoice_ID: Elmas::SalesInvoice.new(journal: "1", id: "2"))
+    expect(invoice_line.sanitize["InvoiceID"]).to eq("2")
   end
 
   it "normalizes has many relationships" do
-    
+    invoice_line1 = Elmas::SalesInvoiceLine.new(item: "1")
+    invoice_line2 = Elmas::SalesInvoiceLine.new(item: "2")
+    invoice = Elmas::SalesInvoice.new(journal: "1", ordered_by:"sd", sales_invoice_lines: [invoice_line1, invoice_line2])
+    expect(invoice.sanitize["SalesInvoiceLines"]).to eq([{"Item"=>"1"}, {"Item"=>"2"}])
   end
 end
