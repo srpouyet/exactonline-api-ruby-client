@@ -26,6 +26,7 @@ require "elmas/resources/costcenter"
 require "elmas/resources/transaction"
 require "elmas/resources/transaction_line"
 require "elmas/resources/document"
+require "elmas/resources/document_attachment"
 require "elmas/resources/mailbox"
 
 module Elmas
