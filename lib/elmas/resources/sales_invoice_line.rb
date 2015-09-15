@@ -8,7 +8,7 @@ module Elmas
     end
 
     def mandatory_attributes
-      [:item]
+      [:item, :invoice_ID]
     end
 
     def other_attributes

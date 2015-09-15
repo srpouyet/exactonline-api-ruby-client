@@ -80,10 +80,24 @@ module Elmas
       @attributes.each do |key, value|
         next if key == :id || !valid_attribute?(key)
         key = Utils.parse_key(key)
-        value.is_a?(Elmas::Resource) ? submit_value = value.id : submit_value = value # Turn relation into ID
+        submit_value = sanitize_relationship(value)
         to_submit[key] = submit_value
       end
       to_submit
+    end
+
+    def sanitize_relationship(value)
+      if value.is_a?(Elmas::Resource)
+        submit_value = value.id # Turn relation into ID
+      elsif value.is_a?(Array)
+        submit_value = []
+        value.each do |e|
+          submit_value << e.sanitize
+        end
+      else
+        submit_value = value
+      end
+      submit_value
     end
 
     # Getter/Setter for resource
