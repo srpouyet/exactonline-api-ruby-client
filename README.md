@@ -159,6 +159,34 @@ contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel"  )
 contact.save
 ```
 
+### SalesInvoice flow
+SalesInvoices have a relationship with SalesInvoiceLines. A SalesInvoice has many
+SalesInvoiceLines and a SalesInvoiceLine belongs to a SalesInvoice. To create a
+valid SalesInvoice you need to embed the SalesInvoiceLines
+
+```ruby
+sales_invoice = Elmas::SalesInvoice.new(journal: "id of your journal", ordered_by: "id of customer")
+```
+Now it still needs SalesInvoiceLines
+```ruby
+sales_invoice_lines = []
+sales_invoice_lines << Elmas::SalesInvoiceLine.new(item: "id of item being sold") # do this for each item you want in the invoice.
+sales_invoice.sales_invoice_lines = sales_invoice_lines
+```
+Now you can save the SalesInvoice and it will be parsed to the following
+```ruby
+sales_invoice.save
+# Sanitized object: {"Journal"=>"id of your journal", "OrderedBy"=>"id of customer", "SalesInvoiceLines"=>[{"Item"=>"id of item being sold"}]}
+```
+
+If you have a SalesInvoice with an id(so saved before already), you can also create invoice lines without embedding
+```ruby
+sales_invoice = Elmas::SalesInvoice.new({id: "1"}).first
+sales_invoice_line = Elmas::SalesInvoiceLine.new(invoice_ID: sales_invoice, item: "42")
+sales_invoice.save
+# Sanitized object: {"Item"=>"42", "InvoiceID"=>"1"}
+```
+
 For many resources there are mandatory attributes, you can see that in the classes
 for every resource. For example for Contact: https://github.com/exactonline/exactonline-api-ruby-client/blob/master/lib/elmas/resources/contact.rb
 
