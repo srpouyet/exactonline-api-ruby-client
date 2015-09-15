@@ -42,7 +42,6 @@ describe Elmas::Request do
     stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices(guid'#{random_id}')?")
     resource = Elmas::SalesInvoice.new(id: random_id)
     response = resource.find
-    expect(response).to be_a(Elmas::Response)
   end
 
   it "does a post request" do

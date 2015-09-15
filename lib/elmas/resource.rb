@@ -24,7 +24,8 @@ module Elmas
     def find_all(options = {})
       @order_by = options[:order_by]
       @select = options[:select]
-      get(uri([:order, :select]))
+      response = get(uri([:order, :select]))
+      response.results if response
     end
 
     # Pass filters in an array, for example 'filters: [:id, :name]'
@@ -32,12 +33,14 @@ module Elmas
       @filters = options[:filters]
       @order_by = options[:order_by]
       @select = options[:select]
-      get(uri([:order, :select, :filters]))
+      response = get(uri([:order, :select, :filters]))
+      response.results if response
     end
 
     def find
       return nil unless id?
-      get(uri([:id]))
+      response = get(uri([:id]))
+      response.result if response
     end
 
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths

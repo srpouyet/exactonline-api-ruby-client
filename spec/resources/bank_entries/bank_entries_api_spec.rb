@@ -37,46 +37,46 @@ describe Elmas::BankEntry do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry(guid'23')?")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries(guid'23')?")
       resource.find
     end
 
     it "should apply no filters for find_all" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:financial_year, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$order_by=FinancialYear&$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$order_by=FinancialYear&$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:financial_year, :id], order_by: :financial_year)
     end
 
     it "should only apply the order_by" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$order_by=FinancialYear")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$order_by=FinancialYear")
       resource.find_all(order_by: :financial_year)
     end
   end
 
   context "Applying select" do
     it "should apply one select" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$select=FinancialYear")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$select=FinancialYear")
       resource.find_all(select: [:financial_year])
     end
 
     it "should apply one select with find_by" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$select=FinancialYear")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$select=FinancialYear")
       resource.find_by(select: [:financial_year])
     end
 
     it "should apply one select" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$select=FinancialYear,Id")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$select=FinancialYear,Id")
       resource.find_all(select: [:financial_year, :id])
     end
   end
