@@ -37,7 +37,7 @@ describe Elmas::SalesOrderLine do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("salesorder/SalesOrderLines?$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesorder/SalesOrderLines(guid'23')?")
       resource.find
     end
 

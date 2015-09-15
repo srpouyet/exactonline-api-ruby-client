@@ -16,20 +16,20 @@ describe Elmas::SalesInvoiceLine do
     expect(sales_invoice_line.valid?).to eq(true)
   end
 
+  let(:resource) { Elmas::SalesInvoiceLine.new(id: "23", item: "22") }
+
   context "Applying filters" do
     it "should apply ID filter for find" do
-      resource = Elmas::SalesInvoiceLine.new(id: "23")
-      expect(URI.unescape(resource.uri([:filters]).to_s)).to eq("salesinvoice/SalesInvoiceLines?$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoiceLines(guid'23')?")
+      resource.find
     end
 
     it "should apply no filters for find_all" do
-      resource = Elmas::SalesInvoiceLine.new(id: "23", item: "22")
       expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoiceLines?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::SalesInvoiceLine.new(id: "23", item: "22")
       expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoiceLines?$filter=Item+eq+'22'&$filter=ID+eq+guid'23'")
       resource.find_by(filters: [:item, :id])
     end

@@ -37,7 +37,7 @@ describe Elmas::GLAccount do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("financial/GLAccounts?$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financial/GLAccounts(guid'23')?")
       resource.find
     end
 

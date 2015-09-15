@@ -104,7 +104,7 @@ To find a contact
 ```ruby
 contact = Elmas::Contact.new(id: "23445")
 contact.find
-# path = /crm/Contacts?$filter=ID eq guid'23445'
+# path = /crm/Contacts(guid'23445')
 ```
 
 To find a contact with specific filters

@@ -37,7 +37,7 @@ describe Elmas::BankEntry do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry?$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntry(guid'23')?")
       resource.find
     end
 

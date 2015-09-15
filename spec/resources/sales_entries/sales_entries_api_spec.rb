@@ -37,7 +37,7 @@ describe Elmas::SalesEntry do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("salesentry/SalesEntries?$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesentry/SalesEntries(guid'23')?")
       resource.find
     end
 

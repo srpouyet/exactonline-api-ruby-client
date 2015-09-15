@@ -6,15 +6,17 @@ module Elmas
   module Resource
     include UriMethods
 
-    STANDARD_FILTERS = [:id].freeze
-
     attr_accessor :attributes, :url
     attr_reader :response
 
     def initialize(attributes = {})
       @attributes = Utils.normalize_hash(attributes)
-      @filters = STANDARD_FILTERS
+      @filters = []
       @query = []
+    end
+
+    def id
+      @attributes[:id]
     end
 
     def find_all(options = {})
@@ -33,7 +35,7 @@ module Elmas
 
     def find
       return nil unless id?
-      get(uri([:filters]))
+      get(uri([:id]))
     end
 
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
