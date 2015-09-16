@@ -42,7 +42,6 @@ describe Elmas::Request do
     stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices(guid'#{random_id}')?")
     resource = Elmas::SalesInvoice.new(id: random_id)
     response = resource.find
-    expect(response).to be_a(Elmas::Response)
   end
 
   it "does a post request" do
@@ -82,5 +81,10 @@ describe Elmas::Request do
     invoice_line2 = Elmas::SalesInvoiceLine.new(item: "2")
     invoice = Elmas::SalesInvoice.new(journal: "1", ordered_by:"sd", sales_invoice_lines: [invoice_line1, invoice_line2])
     expect(invoice.sanitize["SalesInvoiceLines"]).to eq([{"Item"=>"1"}, {"Item"=>"2"}])
+  end
+
+  it "normalizes dates" do
+    account = Elmas::Account.new(start_date: DateTime.new(2001,5,6,4,5,6))
+    expect(account.sanitize["StartDate"]).to eq("datetime'2001-05-06T04:05'")
   end
 end

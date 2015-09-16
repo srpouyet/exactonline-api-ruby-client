@@ -9,7 +9,15 @@ module Elmas
     end
 
     def results
-      @object["d"]["results"]
+      @object["d"]["results"] if @object
+    end
+
+    def metadata
+      @object["d"]["__metadata"] if @object
+    end
+
+    def result
+      @object["d"] if @object
     end
 
     def error_message

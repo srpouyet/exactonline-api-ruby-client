@@ -7,7 +7,10 @@ module Elmas
     end
 
     def other_attributes
-      [:account, :description, :for_division, :publish, :type, :valid_from, :valid_to]
+      [
+        :account, :description, :for_division, :publish,
+        :type, :valid_from, :valid_to
+      ]
     end
 
     def mandatory_attributes

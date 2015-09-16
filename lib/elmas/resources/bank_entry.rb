@@ -3,7 +3,7 @@ module Elmas
     include Elmas::Resource
 
     def base_path
-      "financialtransaction/BankEntry"
+      "financialtransaction/BankEntries"
     end
 
     def mandatory_attributes

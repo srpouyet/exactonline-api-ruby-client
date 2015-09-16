@@ -2,10 +2,6 @@ module Elmas
   class DocumentAttachment
     include Elmas::Resource
 
-    def valid_actions
-      [:get]
-    end
-
     def base_path
       "documents/DocumentAttachments"
     end
