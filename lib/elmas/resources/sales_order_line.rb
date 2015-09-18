@@ -1,6 +1,7 @@
 module Elmas
   class SalesOrderLine
     include Elmas::Resource
+    include Elmas::SharedSalesAttributes
 
     def base_path
       "salesorder/SalesOrderLines"
@@ -11,12 +12,13 @@ module Elmas
     end
 
     def other_attributes
-      [
-        :amount_FC, :cost_center, :cost_unit, :delivery_date, :description,
-        :discount, :item_version, :net_price, :notes, :order_number, :pricelist,
-        :project, :quantity, :tax_schedule, :unit_code, :unit_price, :use_drop_shipment,
-        :VAT_amount, :VAT_code, :VAT_percentage
-      ]
+      SHARED_LINE_ATTRIBUTES.inject(
+        [
+          :amount_FC, :delivery_date, :item_version, :order_number, :unit_price,
+          :use_drop_shipment, :VAT_amount
+        ],
+        :<<
+      )
     end
   end
 end

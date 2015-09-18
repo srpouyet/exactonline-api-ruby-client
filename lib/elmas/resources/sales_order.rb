@@ -1,6 +1,7 @@
 module Elmas
   class SalesOrder
     include Elmas::Resource
+    include Elmas::SharedSalesAttributes
 
     def base_path
       "salesorder/SalesOrders"
@@ -11,14 +12,13 @@ module Elmas
     end
 
     def other_attributes
-      [
-        :currency, :deliver_to, :deliver_to_contact_person, :delivery_date,
-        :delivery_status, :description, :document, :invoice_status, :invoice_to,
-        :invoice_to_contact_person, :order_date, :ordered_by_contact_person,
-        :order_number, :payment_condition, :payment_reference, :remarks,
-        :sales_person, :shipping_method, :status, :tax_schedule, :warehouse_ID,
-        :your_ref
-      ]
+      SHARED_SALES_ATTRIBUTES.inject(
+        [
+          :deliver_to_contact_person, :delivery_date, :delivery_status,
+          :sales_person, :shipping_method, :status, :tax_schedule, :warehouse_ID
+        ],
+        :<<
+      )
     end
   end
 end
