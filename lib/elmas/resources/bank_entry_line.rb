@@ -1,14 +1,10 @@
 module Elmas
-  class BankEntryLine
+  class BankEntryLine < Elmas::BaseEntryLine
     # A sales entry line belongs to a sales entry
     include Elmas::Resource
 
     def base_path
       "financialtransaction/BankEntryLines"
-    end
-
-    def mandatory_attributes
-      [:amount_FC, :GL_account, :entry_ID]
     end
 
     def other_attributes
