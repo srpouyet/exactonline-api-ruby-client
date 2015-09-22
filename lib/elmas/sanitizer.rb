@@ -1,3 +1,6 @@
+require "active_support"
+require "active_support/time"
+require "active_support/core_ext/time/zones"
 module Elmas
   module Resource
     module Sanitizer
@@ -22,7 +25,8 @@ module Elmas
           return sanitize_date_time(value)
         elsif value.is_a?(String) && value.match(/(Date\()/)
           number = value.scan(/\d+/).first.to_i / 1000.0
-          return sanitize_date_time(Time.at(number)) # rubocop:disable TimeZone
+          Time.zone = ActiveSupport::TimeZone.new("Europe/Amsterdam")
+          return sanitize_date_time(Time.zone.at(number))
         else
           return value
         end
