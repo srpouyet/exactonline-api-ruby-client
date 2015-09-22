@@ -31,6 +31,7 @@ require "elmas/resources/transaction_line"
 require "elmas/resources/document"
 require "elmas/resources/document_attachment"
 require "elmas/resources/mailbox"
+require "elmas/resources/vat_code"
 
 module Elmas
   extend Config
