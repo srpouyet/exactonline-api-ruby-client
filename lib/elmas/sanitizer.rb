@@ -20,6 +20,9 @@ module Elmas
           return sanitize_has_many(value)
         elsif value.is_a?(DateTime)
           return sanitize_date_time(value)
+        elsif value.is_a?(String) && value.match(/(Date\()/)
+          number = value.scan(/\d+/).first.to_i / 1000.0
+          return sanitize_date_time(Time.at(number)) # rubocop:disable TimeZone
         else
           return value
         end
