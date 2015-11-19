@@ -33,7 +33,7 @@ module Elmas
       end
 
       def sanitize_date_time(value)
-        value.strftime("datetime'%Y-%m-%dT%H:%M'")
+        value.strftime("%Y-%m-%d")
       end
 
       def sanitize_has_many(value)
