@@ -85,12 +85,12 @@ describe Elmas::Request do
 
   it "normalizes dates" do
     account = Elmas::Account.new(start_date: DateTime.new(2001,5,6,4,5,6))
-    expect(account.sanitize["StartDate"]).to eq("datetime'2001-05-06T04:05'")
+    expect(account.sanitize["StartDate"]).to eq("2001-05-06")
   end
 
   it "normalizes C# string dates" do
     serialized_date = "/Date(1423526400000)/"
     contact = Elmas::Contact.new(start_date: serialized_date)
-    expect(contact.sanitize["StartDate"]).to eq("datetime'2015-02-10T01:00'")
+    expect(contact.sanitize["StartDate"]).to eq("2015-02-10")
   end
 end
