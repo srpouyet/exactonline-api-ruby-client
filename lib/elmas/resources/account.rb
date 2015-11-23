@@ -11,7 +11,7 @@ module Elmas
       [:name]
     end
 
-    # https://start.exactonline.nl/docs/HlpRestAPIResourcesDetails.aspx?id=9
+    # https://start.exactonline.nl/docs/HlpRestAPIResourcesDetails.aspx?name=CRMAccounts
     def other_attributes # rubocop:disable Metrics/MethodLength
       [
         :accountant, :account_manager, :activity_sector,
