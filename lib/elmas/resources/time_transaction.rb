@@ -11,7 +11,7 @@ module Elmas
     end
 
     # https://start.exactonline.nl/docs/HlpRestAPIResourcesDetails.aspx?name=ProjectTimeTransactions
-    def other_attributes # rubocop:disable Metrics/MethodLength
+    def other_attributes
       [
         :account, :account_name, :activity, :activity_description, :amount, :amount_fc,
         :attachment, :created, :creator, :creator_full_name, :currency, :date,
