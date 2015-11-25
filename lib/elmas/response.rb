@@ -71,10 +71,6 @@ module Elmas
       Elmas.error(message)
     end
 
-    def unauthorized?
-      UNAUTHORIZED_CODES.include? status
-    end
-
     SUCCESS_CODES = [
       201, 202, 203, 204, 301, 302, 303, 304
     ]
