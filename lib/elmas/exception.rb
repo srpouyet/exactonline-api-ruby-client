@@ -1,17 +1,13 @@
 module Elmas
   class BadRequestException < Exception
-    def initialize(object)
+    def initialize(response, parsed)
+      @response = response
+      @parsed = parsed
       super(message)
-      @object = object
     end
 
     def message
-      case @object
-      when 500
-        "Server error"
-      else
-        "Something went wrong"
-      end
+      "code #{@response.status}: #{@parsed.error_message}"
     end
   end
 

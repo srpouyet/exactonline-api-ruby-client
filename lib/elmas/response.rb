@@ -7,7 +7,10 @@ module Elmas
 
     def initialize(response)
       @response = response
-      log_error if fail?
+      if fail?
+        log_error
+        raise BadRequestException.new(@response, parsed)
+      end
     end
 
     def success?
