@@ -27,7 +27,12 @@ module Elmas
         if attribute == :id
           return id_filter
         else
-          return ["$filter", "#{Utils.camelize(attribute)} eq '#{@attributes[attribute]}'"]
+          if @attributes[attribute].is_a?(Fixnum)
+            value = @attributes[attribute]
+          else
+            value = "'#{@attributes[attribute]}'"
+          end
+          return ["$filter", "#{Utils.camelize(attribute)} eq #{value}"]
         end
       end
 
