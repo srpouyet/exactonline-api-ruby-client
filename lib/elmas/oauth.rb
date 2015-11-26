@@ -56,7 +56,6 @@ module Elmas
       conn = Faraday.new(url: "https://start.exactonline.nl") do |faraday|
         faraday.request :url_encoded
         faraday.adapter Faraday.default_adapter
-        faraday.response :logger
       end
       params = access_token_params(code)
       conn.post do |req|
