@@ -1,27 +1,33 @@
 module Elmas
   class Parser
+    attr_accessor :parsed_json
+
     def initialize(json)
-      @object = JSON.parse(json)
+      @parsed_json = JSON.parse(json)
     rescue JSON::ParserError => e
-      Elmas.error("There was an error parsing the response, #{e.message}")
-      @error_message = e.message
-      return false
+      Elmas.error 'There was an error parsing the response'
+      Elmas.error "#{e.class}: #{e.message}"
+      @error_message = "#{e.class}: #{e.message}"
     end
 
     def results
-      @object["d"]["results"] if @object
+      result['results'] if result && result['results']
     end
 
     def metadata
-      @object["d"]["__metadata"] if @object
+      result['__metadata'] if result && result['__metadata']
     end
 
     def result
-      @object["d"] if @object
+      parsed_json['d']
     end
 
     def error_message
-      @error_message ||= @object["error"]["message"]["value"]
+      @error_message ||= begin
+        if parsed_json['error']
+          parsed_json['error']['message']['value']
+        end
+      end
     end
 
     def first_result

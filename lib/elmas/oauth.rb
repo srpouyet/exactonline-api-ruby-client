@@ -19,9 +19,13 @@ module Elmas
     end
 
     def authorized?
-      response = get("/Current/Me", no_division: true)
-      !response.unauthorized?
       # Do a test call, return false if 401 or any error code
+      begin
+        response = get("/Current/Me", no_division: true)
+      rescue BadRequestException => e
+        Elmas.error "Not yet authorized"
+        return false
+      end
     end
 
     def authorize_division

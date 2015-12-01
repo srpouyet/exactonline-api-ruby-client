@@ -39,9 +39,11 @@ describe Elmas::Request do
 
   it "does a get request with params" do
     random_id = rand(999).to_s
-    stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices(guid'#{random_id}')?")
+    stub_request(:get, "#{url_with_endpoint_and_division}/salesinvoice/SalesInvoices(guid'#{random_id}')?").
+       to_return(status: 200, body: { :d => { :__metadata => { 'type' => "Exact.Web.Api.Models.SalesInvoice" } } }.to_json)
     resource = Elmas::SalesInvoice.new(id: random_id)
     response = resource.find
+    expect(response).to be_a(Elmas::SalesInvoice)
   end
 
   it "does a post request" do

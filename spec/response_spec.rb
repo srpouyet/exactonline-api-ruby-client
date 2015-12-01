@@ -89,12 +89,8 @@ describe Elmas::Response do
     expect(Elmas::Response.new(random_success_response).success?).to eq(true)
   end
 
-  it "returns true for fail" do
-    expect(Elmas::Response.new(random_fail_response).fail?).to eq(true)
-  end
-
   it "returns true for unauthorized" do
-    expect(Elmas::Response.new(random_unauthorized_response).unauthorized?).to eq(true)
+    expect { Elmas::Response.new(random_unauthorized_response) }.to raise_exception(Elmas::BadRequestException)
   end
 
   it "resolves the type for a request properly" do
@@ -102,7 +98,7 @@ describe Elmas::Response do
   end
 
   it "resolves the error for a failed request properly" do
-    expect(Elmas::Response.new(random_fail_response).error_message).to eq("Unrecognized 'Edm.Guid' literal 'guid'dsadsds'' in '6'.")
+    expect { Elmas::Response.new(random_fail_response) }.to raise_exception(Elmas::BadRequestException)
   end
 
   it "resolves the unknown class for a request properly" do
