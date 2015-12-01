@@ -155,8 +155,31 @@ contact.find_all(select: [:last_name, :first_name])
 To create a new contact
 
 ```ruby
-contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel"  )
+contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel", account: "8d87c8c5-f1c6-495c-b6af-d5ba396873b5"  )
 contact.save
+```
+
+### Projects and Time Tracking
+
+Project Types:
+
+- :type=>2, :type_description=>"Fixed price"
+- :type=>3, :type_description=>"Time and Material"
+- :type=>4, :type_description=>"Non billable"
+- :type=>5, :type_description=>"Prepaid"
+
+To create a new project
+
+```ruby
+project = Elmas::Project.new(code: "PROJ902343", description: "Great project", account: "8d87c8c5-f1c6-495c-b6af-d5ba396873b5", type: 2 )
+project.save
+```
+
+To submit a new time transaction
+
+```ruby
+hours = Elmas::TimeTransaction.new(account: "8d87c8c5-f1c6-495c-b6af-d5ba396873b5", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1", quantity: 3.0, notes: "")
+hours.save
 ```
 
 ### SalesInvoice flow
