@@ -49,11 +49,9 @@ module Elmas
     end
 
     def valid?
-      valid = true
-      mandatory_attributes.each do |attribute|
-        valid = @attributes.key? attribute
+      mandatory_attributes.all? do |attribute|
+        @attributes.key? attribute
       end
-      valid
     end
 
     def id?
