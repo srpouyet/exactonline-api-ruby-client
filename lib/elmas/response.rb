@@ -7,10 +7,7 @@ module Elmas
 
     def initialize(response)
       @response = response
-      if fail?
-        log_error
-        raise BadRequestException.new(@response, parsed)
-      end
+      raise_and_log_error if fail?
     end
 
     def success?
@@ -84,6 +81,11 @@ module Elmas
     ]
 
     private
+
+    def raise_and_log_error
+      log_error
+      fail BadRequestException.new(@response, parsed)
+    end
 
     def resolve_class
       constant_name = Utils.modulize(type)
