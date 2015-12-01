@@ -8,6 +8,10 @@ module Elmas
   class PrintedSalesInvoice
     include Elmas::Resource
 
+    def valid_actions
+      [:post]
+    end
+
     def base_path
       "salesinvoice/PrintedSalesInvoices"
     end
