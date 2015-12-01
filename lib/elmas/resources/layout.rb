@@ -2,6 +2,10 @@ module Elmas
   class Layout
     include Elmas::Resource
 
+    def valid_actions
+      [:get]
+    end
+
     def base_path
       "salesinvoice/Layouts"
     end
