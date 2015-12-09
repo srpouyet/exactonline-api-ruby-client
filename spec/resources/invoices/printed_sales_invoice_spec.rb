@@ -30,8 +30,8 @@ describe Elmas::PrintedSalesInvoice do
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::PrintedSalesInvoice.new(id: "23", type: "2")
-      expect(Elmas).to receive(:get).with("salesinvoice/PrintedSalesInvoices?$filter=Type+eq+'2'&$filter=ID+eq+guid'23'")
+      resource = Elmas::PrintedSalesInvoice.new(id: "12abcdef-1234-1234-1234-123456abcdef", type: "2")
+      expect(Elmas).to receive(:get).with("salesinvoice/PrintedSalesInvoices?$filter=Type+eq+'2'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:type, :id])
     end
   end

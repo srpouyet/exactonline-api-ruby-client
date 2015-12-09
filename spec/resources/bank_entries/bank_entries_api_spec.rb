@@ -33,11 +33,11 @@ describe Elmas::BankEntry do
     expect(sales_entry.valid?).to eq(false)
   end
 
-  let(:resource) { resource = Elmas::BankEntry.new(id: "23", financial_year: "1223") }
+  let(:resource) { resource = Elmas::BankEntry.new(id: "12abcdef-1234-1234-1234-123456abcdef", financial_year: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries(guid'23')?")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -47,14 +47,14 @@ describe Elmas::BankEntry do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:financial_year, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$order_by=FinancialYear&$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/BankEntries?$order_by=FinancialYear&$filter=FinancialYear+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:financial_year, :id], order_by: :financial_year)
     end
 

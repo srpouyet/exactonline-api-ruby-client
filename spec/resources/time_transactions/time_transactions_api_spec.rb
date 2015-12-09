@@ -24,33 +24,33 @@ describe Elmas::TimeTransaction do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      resource = Elmas::TimeTransaction.new(id: "23")
-      expect(Elmas).to receive(:get).with("project/TimeTransactions(guid'23')?")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef")
+      expect(Elmas).to receive(:get).with("project/TimeTransactions(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
     it "should apply no filters for find_all" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
       expect(Elmas).to receive(:get).with("project/TimeTransactions?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
-      expect(Elmas).to receive(:get).with("project/TimeTransactions?$filter=Item+eq+'eb73942a-53c0-4ee9-bbb2-6d985814a1b1'&$filter=ID+eq+guid'23'")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      expect(Elmas).to receive(:get).with("project/TimeTransactions?$filter=Item+eq+guid'eb73942a-53c0-4ee9-bbb2-6d985814a1b1'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:item, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
-      expect(Elmas).to receive(:get).with("project/TimeTransactions?$order_by=Item&$filter=Item+eq+'eb73942a-53c0-4ee9-bbb2-6d985814a1b1'&$filter=ID+eq+guid'23'")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      expect(Elmas).to receive(:get).with("project/TimeTransactions?$order_by=Item&$filter=Item+eq+guid'eb73942a-53c0-4ee9-bbb2-6d985814a1b1'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:item, :id], order_by: :item)
     end
 
     it "should only apply the order_by" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
       expect(Elmas).to receive(:get).with("project/TimeTransactions?$order_by=Item")
       resource.find_all(order_by: :item)
     end
@@ -58,19 +58,19 @@ describe Elmas::TimeTransaction do
 
   context "Applying select" do
     it "should apply one select" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
       expect(Elmas).to receive(:get).with("project/TimeTransactions?$select=Item")
       resource.find_all(select: [:item])
     end
 
     it "should apply one select with find_by" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
       expect(Elmas).to receive(:get).with("project/TimeTransactions?$select=Item")
       resource.find_by(select: [:item])
     end
 
     it "should apply one select" do
-      resource = Elmas::TimeTransaction.new(id: "23", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
+      resource = Elmas::TimeTransaction.new(id: "12abcdef-1234-1234-1234-123456abcdef", item: "eb73942a-53c0-4ee9-bbb2-6d985814a1b1")
       expect(Elmas).to receive(:get).with("project/TimeTransactions?$select=Item,Notes")
       resource.find_all(select: [:item, :notes])
     end

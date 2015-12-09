@@ -24,21 +24,21 @@ describe Elmas::SalesInvoice do
   end
 
   context "Applying filters" do
-    resource = Elmas::SalesInvoice.new(id: "23", journal: "22")
+    resource = Elmas::SalesInvoice.new(id: "12abcdef-1234-1234-1234-123456abcdef", journal: "22")
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices(guid'23')?")
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
     it "should apply no filters for find_all" do
-      resource = Elmas::SalesInvoice.new(id: "23", journal: "22")
+      resource = Elmas::SalesInvoice.new(id: "12abcdef-1234-1234-1234-123456abcdef", journal: "22")
       expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::SalesInvoice.new(id: "23", journal: "22")
-      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?$filter=Journal+eq+'22'&$filter=ID+eq+guid'23'")
+      resource = Elmas::SalesInvoice.new(id: "12abcdef-1234-1234-1234-123456abcdef", journal: "22")
+      expect(Elmas).to receive(:get).with("salesinvoice/SalesInvoices?$filter=Journal+eq+'22'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:journal, :id])
     end
   end

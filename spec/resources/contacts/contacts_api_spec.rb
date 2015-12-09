@@ -24,33 +24,33 @@ describe Elmas::Contact do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      resource = Elmas::Contact.new(id: "23")
-      expect(Elmas).to receive(:get).with("crm/Contacts(guid'23')?")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef")
+      expect(Elmas).to receive(:get).with("crm/Contacts(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
     it "should apply no filters for find_all" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
       expect(Elmas).to receive(:get).with("crm/Contacts?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$filter=Name+eq+'Karel'&$filter=ID+eq+guid'23'")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$filter=Name+eq+'Karel'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:name, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
-      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=Name&$filter=Name+eq+'Karel'&$filter=ID+eq+guid'23'")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
+      expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=Name&$filter=Name+eq+'Karel'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:name, :id], order_by: :name)
     end
 
     it "should only apply the order_by" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
       expect(Elmas).to receive(:get).with("crm/Contacts?$order_by=Name")
       resource.find_all(order_by: :name)
     end
@@ -58,19 +58,19 @@ describe Elmas::Contact do
 
   context "Applying select" do
     it "should apply one select" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
       expect(Elmas).to receive(:get).with("crm/Contacts?$select=Name")
       resource.find_all(select: [:name])
     end
 
     it "should apply one select with find_by" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
       expect(Elmas).to receive(:get).with("crm/Contacts?$select=Name")
       resource.find_by(select: [:name])
     end
 
     it "should apply one select" do
-      resource = Elmas::Contact.new(id: "23", name: "Karel")
+      resource = Elmas::Contact.new(id: "12abcdef-1234-1234-1234-123456abcdef", name: "Karel")
       expect(Elmas).to receive(:get).with("crm/Contacts?$select=Name,Age")
       resource.find_all(select: [:name, :age])
     end

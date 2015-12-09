@@ -26,11 +26,11 @@ describe Elmas::DocumentAttachment do
     expect(document.valid?).to eq(false)
   end
 
-  let(:resource) { resource = Elmas::DocumentAttachment.new(id: "23", file_name: "1223") }
+  let(:resource) { resource = Elmas::DocumentAttachment.new(id: "12abcdef-1234-1234-1234-123456abcdef", file_name: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("documents/DocumentAttachments(guid'23')?")
+      expect(Elmas).to receive(:get).with("documents/DocumentAttachments(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -40,14 +40,14 @@ describe Elmas::DocumentAttachment do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("documents/DocumentAttachments?$filter=FileName+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("documents/DocumentAttachments?$filter=FileName+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:file_name, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("documents/DocumentAttachments?$order_by=FileName&$filter=FileName+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("documents/DocumentAttachments?$order_by=FileName&$filter=FileName+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:file_name, :id], order_by: :file_name)
     end
 

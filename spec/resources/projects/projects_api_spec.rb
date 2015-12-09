@@ -24,33 +24,33 @@ describe Elmas::Project do
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      resource = Elmas::Project.new(id: "23")
-      expect(Elmas).to receive(:get).with("project/Projects(guid'23')?")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef")
+      expect(Elmas).to receive(:get).with("project/Projects(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
     it "should apply no filters for find_all" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
       expect(Elmas).to receive(:get).with("project/Projects?")
       resource.find_all
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
-      expect(Elmas).to receive(:get).with("project/Projects?$filter=Code+eq+'P001'&$filter=ID+eq+guid'23'")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
+      expect(Elmas).to receive(:get).with("project/Projects?$filter=Code+eq+'P001'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:code, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
-      expect(Elmas).to receive(:get).with("project/Projects?$order_by=Code&$filter=Code+eq+'P001'&$filter=ID+eq+guid'23'")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
+      expect(Elmas).to receive(:get).with("project/Projects?$order_by=Code&$filter=Code+eq+'P001'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:code, :id], order_by: :code)
     end
 
     it "should only apply the order_by" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
       expect(Elmas).to receive(:get).with("project/Projects?$order_by=Code")
       resource.find_all(order_by: :code)
     end
@@ -58,19 +58,19 @@ describe Elmas::Project do
 
   context "Applying select" do
     it "should apply one select" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
       expect(Elmas).to receive(:get).with("project/Projects?$select=Code")
       resource.find_all(select: [:code])
     end
 
     it "should apply one select with find_by" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
       expect(Elmas).to receive(:get).with("project/Projects?$select=Code")
       resource.find_by(select: [:code])
     end
 
     it "should apply one select" do
-      resource = Elmas::Project.new(id: "23", code: "P001")
+      resource = Elmas::Project.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "P001")
       expect(Elmas).to receive(:get).with("project/Projects?$select=Code,Description")
       resource.find_all(select: [:code, :description])
     end

@@ -33,11 +33,11 @@ describe Elmas::SalesOrder do
     expect(sales_order.valid?).to eq(false)
   end
 
-  let(:resource) { resource = Elmas::SalesOrder.new(id: "23", order_number: "1223") }
+  let(:resource) { resource = Elmas::SalesOrder.new(id: "12abcdef-1234-1234-1234-123456abcdef", order_number: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("salesorder/SalesOrders(guid'23')?")
+      expect(Elmas).to receive(:get).with("salesorder/SalesOrders(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -47,14 +47,14 @@ describe Elmas::SalesOrder do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("salesorder/SalesOrders?$filter=OrderNumber+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesorder/SalesOrders?$filter=OrderNumber+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:order_number, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("salesorder/SalesOrders?$order_by=OrderNumber&$filter=OrderNumber+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesorder/SalesOrders?$order_by=OrderNumber&$filter=OrderNumber+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:order_number, :id], order_by: :order_number)
     end
 

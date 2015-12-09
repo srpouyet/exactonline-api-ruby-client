@@ -33,11 +33,11 @@ describe Elmas::SalesEntry do
     expect(sales_entry.valid?).to eq(false)
   end
 
-  let(:resource) { resource = Elmas::SalesEntry.new(id: "23", batch_number: "1223") }
+  let(:resource) { resource = Elmas::SalesEntry.new(id: "12abcdef-1234-1234-1234-123456abcdef", batch_number: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("salesentry/SalesEntries(guid'23')?")
+      expect(Elmas).to receive(:get).with("salesentry/SalesEntries(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -47,14 +47,14 @@ describe Elmas::SalesEntry do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("salesentry/SalesEntries?$filter=BatchNumber+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesentry/SalesEntries?$filter=BatchNumber+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:batch_number, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("salesentry/SalesEntries?$order_by=BatchNumber&$filter=BatchNumber+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("salesentry/SalesEntries?$order_by=BatchNumber&$filter=BatchNumber+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:batch_number, :id], order_by: :batch_number)
     end
 
