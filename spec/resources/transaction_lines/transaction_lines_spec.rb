@@ -22,11 +22,11 @@ describe Elmas::TransactionLine do
     expect(transaction_line.try(:amount_FC)).to eq nil
   end
 
-  let(:resource) { resource = Elmas::TransactionLine.new(id: "23", asset_code: "1223") }
+  let(:resource) { resource = Elmas::TransactionLine.new(id: "12abcdef-1234-1234-1234-123456abcdef", asset_code: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("financialtransaction/TransactionLines(guid'23')?")
+      expect(Elmas).to receive(:get).with("financialtransaction/TransactionLines(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -36,14 +36,14 @@ describe Elmas::TransactionLine do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("financialtransaction/TransactionLines?$filter=AssetCode+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/TransactionLines?$filter=AssetCode+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:asset_code, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("financialtransaction/TransactionLines?$order_by=AssetCode&$filter=AssetCode+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("financialtransaction/TransactionLines?$order_by=AssetCode&$filter=AssetCode+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:asset_code, :id], order_by: :asset_code)
     end
 

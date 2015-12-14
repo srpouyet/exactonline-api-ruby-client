@@ -32,11 +32,11 @@ describe Elmas::Mailbox do
     expect(mailbox.valid?).to eq(true)
   end
 
-  let(:resource) { resource = Elmas::Mailbox.new(id: "23", account: "1223") }
+  let(:resource) { resource = Elmas::Mailbox.new(id: "12abcdef-1234-1234-1234-123456abcdef", account: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("mailbox/Mailboxes(guid'23')?")
+      expect(Elmas).to receive(:get).with("mailbox/Mailboxes(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -46,14 +46,14 @@ describe Elmas::Mailbox do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("mailbox/Mailboxes?$filter=Account+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("mailbox/Mailboxes?$filter=Account+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:account, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("mailbox/Mailboxes?$order_by=Account&$filter=Account+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("mailbox/Mailboxes?$order_by=Account&$filter=Account+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:account, :id], order_by: :account)
     end
 

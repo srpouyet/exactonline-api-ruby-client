@@ -18,21 +18,36 @@ module Elmas
         uri
       end
 
-      # ?$filter=ID eq guid'#{id}'
-      def id_filter
-        ["$filter", "ID eq guid'#{id}'"]
+      def base_filter(attribute)
+        values = @attributes[attribute]
+        values = [values] unless values.is_a?(Array)
+
+        filters = values.map do |value|
+          "#{query_attribute(attribute)} eq #{sanitize_value(value)}"
+        end
+
+        ["$filter", filters.join(" or ")]
       end
 
-      def base_filter(attribute)
+      # Sanitize an attribute in symbol format to the ExactOnline style
+      def query_attribute(attribute)
         if attribute == :id
-          return id_filter
+          attribute.to_s.upcase
         else
-          if @attributes[attribute].is_a?(Fixnum)
-            value = @attributes[attribute]
+          Utils.camelize(attribute)
+        end
+      end
+
+      # Convert a value to something usable in an ExactOnline request
+      def sanitize_value(value)
+        if value.is_a?(String)
+          if value =~ /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
+            "guid'#{value}'"
           else
-            value = "'#{@attributes[attribute]}'"
+            "'#{value}'"
           end
-          return ["$filter", "#{Utils.camelize(attribute)} eq #{value}"]
+        else
+          value
         end
       end
 

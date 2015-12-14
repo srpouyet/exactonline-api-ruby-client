@@ -32,11 +32,11 @@ describe Elmas::Item do
     expect(item.valid?).to eq(false)
   end
 
-  let(:resource) { resource = Elmas::Item.new(id: "23", code: "1223") }
+  let(:resource) { resource = Elmas::Item.new(id: "12abcdef-1234-1234-1234-123456abcdef", code: "1223") }
 
   context "Applying filters" do
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("logistics/Items(guid'23')?")
+      expect(Elmas).to receive(:get).with("logistics/Items(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -46,14 +46,14 @@ describe Elmas::Item do
     end
 
     it "should apply given filters for find_by" do
-      expect(Elmas).to receive(:get).with("logistics/Items?$filter=Code+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("logistics/Items?$filter=Code+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:code, :id])
     end
   end
 
   context "Applying order" do
     it "should apply the order_by and filters" do
-      expect(Elmas).to receive(:get).with("logistics/Items?$order_by=Code&$filter=Code+eq+'1223'&$filter=ID+eq+guid'23'")
+      expect(Elmas).to receive(:get).with("logistics/Items?$order_by=Code&$filter=Code+eq+'1223'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:code, :id], order_by: :code)
     end
 
