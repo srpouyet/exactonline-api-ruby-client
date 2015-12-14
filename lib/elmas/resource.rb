@@ -40,7 +40,7 @@ module Elmas
     def find
       return nil unless id?
       response = get(uri([:id]))
-      response.result if response
+      response.results.first if response
     end
 
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
