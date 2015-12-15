@@ -96,7 +96,7 @@ to retrieve at a time.
 accounts = Elmas::Account.new.find_all
 
 # Return an array of accounts
-accounts.results
+accounts.records
 ```
 
 If the query results in more than 60 records the next set can be retrieved using
