@@ -15,6 +15,7 @@ module Elmas
     end
 
     def next_page
+      return unless next_page_url
       next_page = Elmas.get(next_page_url, use_raw_path: true)
       return unless next_page
 
