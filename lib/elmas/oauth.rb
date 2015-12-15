@@ -27,7 +27,7 @@ module Elmas
     end
 
     def authorize_division
-      get("/Current/Me", no_division: true).first.current_division
+      get("/Current/Me", no_division: true).results.first.current_division
     end
 
     def auto_authorize

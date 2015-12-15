@@ -24,9 +24,11 @@ module Elmas
     private
 
     def build_path(path, options)
-      path = "#{division}/#{path}" unless options[:no_division]
-      path = "#{endpoint}/#{path}" unless options[:no_endpoint]
-      path = "#{options[:url] || base_url}/#{path}"
+      unless options[:use_raw_path]
+        path = "#{division}/#{path}" unless options[:no_division]
+        path = "#{endpoint}/#{path}" unless options[:no_endpoint]
+        path = "#{options[:url] || base_url}/#{path}"
+      end
       path
     end
 

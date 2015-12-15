@@ -82,79 +82,75 @@ unless Elmas.authorized?
 end
 ```
 
-## GET, PUT, POST requests
+## Accessing the API
 
-For any of the following requests (GET, PUT, POST), to get the results do the following. (the exact API always returns a List)
+We can retrieve data from the API using the following syntax.
+
+The query will return an `Elmas::ResultSet` which contains up to 60 records and
+a method to retrieve the next page of results. Unfortunately the ExactOnline API
+does not allow us to retrieve a specific page or define how many records we want
+to retrieve at a time.
+
 ```ruby
-contact = Elmas::Contact.new(id: "23445")
-response = contact.find
-puts response.first
-# Prints something like this
-# [<Elmas::Contact:0x007fb0a55782f0 @attributes={:__metadata=>{"uri"=>"https://start.exactonline.nl/api/v1/797636/crm/Contacts(guid'23445')", "type"=>"Exact.Web.Api.Models.Contact"}, :id=>"23445", :person=>"88380fa4-97bc-4ddf-90e3-b0e7befb112c"}>
+# Query the API and return an Elmas::ResultSet
+accounts = Elmas::Account.new.find_all
 
-contact = Elmas::Contact.new.find_all
-response = contact.find_all
-puts response.results
-# Prints something like this
-# [<Elmas::Contact:0x007fb0a55782f0 @attributes={:__metadata=>{"uri"=>"https://start.exactonline.nl/api/v1/797636/crm/Contacts(guid'23445')", "type"=>"Exact.Web.Api.Models.Contact"}, :id=>"23445", :person=>"88380fa4-97bc-4ddf-90e3-b0e7befb112c"}>, <Elmas::Contact:0x007fb0a55782f0 @attributes={:__metadata=>{"uri"=>"https://start.exactonline.nl/api/v1/797636/crm/Contacts(guid'23445')", "type"=>"Exact.Web.Api.Models.Contact"}, :id=>"23445", :person=>"88380fa4-97bc-4ddf-90e3-b0e7befb112c"}>]
+# Return an array of accounts
+accounts.records
 ```
 
-To find a contact
+If the query results in more than 60 records the next set can be retrieved using
+the `next_page` method.
 
 ```ruby
-contact = Elmas::Contact.new(id: "23445")
-contact.find
-# path = /crm/Contacts(guid'23445')
+# Return an Elmas::ResultSet containing the next page's records
+accounts.next_page
 ```
 
-To find a contact with specific filters
+### Filter results
+
+Filtering result sets can be done by adding attributes to the initializer and then
+using `find_by`. Filters accept a single value or an array of values.
+
+So far only 'eq' has been implemented, so only direct matches will be returned.
+
 ```ruby
-contact = Elmas::Contact.new(first_name: "Karel", id: "23")
-contact.find_by(filters: [:first_name])
-# path = /crm/Contacts?$filter=first_name eq 'Karel'
+# Find the account with code 123
+accounts = Elmas::Account.new(code: '123').find_by(filter: [:code])
+
+# Find the accounts with code 123 and 345
+accounts = Elmas::Account.new(code: ['123', '345']).find_by(filter: [:code])
 ```
 
-To find contacts with an order and a filter
+Results can be sorted in the same way
+
 ```ruby
-contact = Elmas::Contact.new(first_name: "Karel")
-contact.find_by(filters: [:first_name], order_by: :first_name)
-# path = /crm/Contacts?$order_by=first_name&$filter=first_name eq 'Karel'
+# Return all accounts sorted by first name
+accounts = Elmas::Account.new.find_all(order_by: :first_name)
 ```
 
-To find contacts with an order, a filter and selecting relationships
+Filters and sorting can also be combined
+
 ```ruby
-contact = Elmas::Contact.new(first_name: "Karel")
-contact.find_by(filters: [:first_name], order_by: :first_name, select: [:last_name])
-# path = /crm/Contacts?$select=last_name&$order_by=first_name&$filter=first_name eq 'Karel'
+# Return accounts with code 123 and 345 sorted by first name
+accounts = Elmas::Account.new(code: ['123', '345']).find_by(filter: [:code], order_by: :first_name)
 ```
 
-So with find_by you can combine Filters, Select and OrderBy. For more information on this way of selecting data look here http://www.odata.org/
-There's also a method find_all, which does a get without filters. You can however set the select and order by params.
+To find an individual record by its ID the `find` method can be used
 
-To find all contacts
 ```ruby
-contact = Elmas::Contact.new
-contact.find_all
-# path = /crm/Contacts
+# Return the account with guid
+account = Elmas::Account.new(id: '9e3a078e-55dc-40f4-a490-1875400a3e10').find
 ```
 
-To find all contacts and order by first_name
-```ruby
-contact = Elmas::Contact.new
-contact.find_all(order_by: :first_name)
-# path = /crm/Contacts?$order_by=first_name
-```
+For more information on this way of selecting data look here http://www.odata.org/
 
-To find all contacts and select invoices and items
-```ruby
-contact = Elmas::Contact.new
-contact.find_all(select: [:last_name, :first_name])
-# path = /crm/Contacts?$select=last_name,first_name
-```
+### Creating new records
 
-To create a new contact
+Use the initializer method followed by 'save' to create a new record:
 
 ```ruby
+# Create a new contact
 contact = Elmas::Contact.new(first_name: "Karel", last_name: "Appel", account: "8d87c8c5-f1c6-495c-b6af-d5ba396873b5"  )
 contact.save
 ```

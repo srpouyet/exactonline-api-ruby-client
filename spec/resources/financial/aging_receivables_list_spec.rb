@@ -17,9 +17,9 @@ describe Elmas::AgingReceivablesList do
   end
 
   context "Applying filters" do
-    resource = Elmas::AgingReceivablesList.new(id: 123)
+    resource = Elmas::AgingReceivablesList.new(id: '12abcdef-1234-1234-1234-123456abcdef')
     it "should apply ID filter for find" do
-      expect(Elmas).to receive(:get).with("financial/AgingReceivablesLists(guid'123')?")
+      expect(Elmas).to receive(:get).with("financial/AgingReceivablesLists(guid'12abcdef-1234-1234-1234-123456abcdef')?")
       resource.find
     end
 
@@ -30,8 +30,8 @@ describe Elmas::AgingReceivablesList do
     end
 
     it "should apply given filters for find_by" do
-      resource = Elmas::AgingReceivablesList.new(id: "23", type: "2")
-      expect(Elmas).to receive(:get).with("financial/AgingReceivablesLists?$filter=Type+eq+'2'&$filter=ID+eq+guid'23'")
+      resource = Elmas::AgingReceivablesList.new(id: "12abcdef-1234-1234-1234-123456abcdef", type: "2")
+      expect(Elmas).to receive(:get).with("financial/AgingReceivablesLists?$filter=Type+eq+'2'&$filter=ID+eq+guid'12abcdef-1234-1234-1234-123456abcdef'")
       resource.find_by(filters: [:type, :id])
     end
   end

@@ -94,7 +94,7 @@ describe Elmas::Response do
   end
 
   it "resolves the type for a request properly" do
-    expect(Elmas::Response.new(good_response).type).to eq("Contact")
+    expect(Elmas::Response.new(good_response).results.first.class).to eq(Elmas::Contact)
   end
 
   it "resolves the error for a failed request properly" do
@@ -102,10 +102,10 @@ describe Elmas::Response do
   end
 
   it "resolves the unknown class for a request properly" do
-    expect(Elmas::Response.new(unkown_class_response).first.full_name).to eq("Karel Appel")
+    expect(Elmas::Response.new(unkown_class_response).results.first.full_name).to eq("Karel Appel")
   end
 
   it "returns the first result" do
-    expect(Elmas::Response.new(good_response).first).to be_a(Elmas::Contact)
+    expect(Elmas::Response.new(good_response).results.first).to be_a(Elmas::Contact)
   end
 end

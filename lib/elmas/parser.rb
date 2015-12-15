@@ -22,6 +22,10 @@ module Elmas
       parsed_json["d"]
     end
 
+    def next_page_url
+      result && result["__next"]
+    end
+
     def error_message
       @error_message ||= begin
         parsed_json["error"]["message"]["value"] if parsed_json["error"]

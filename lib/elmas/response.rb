@@ -22,33 +22,12 @@ module Elmas
       Parser.new(body)
     end
 
-    def results
-      results = []
-      if parsed.results
-        parsed.results.each do |attributes|
-          klass = resolve_class
-          results << klass.send(:new, attributes)
-        end
-      end
-      results
-    end
-
     def result
-      klass = resolve_class
-      klass.send(:new, parsed.result)
+      Elmas::ResultSet.new(parsed)
     end
 
-    def first
-      results ? results.first : result
-    end
-
-    def type
-      if parsed.metadata
-        c_type = parsed.metadata["type"]
-      elsif parsed.results.any?
-        c_type = parsed.results.first["__metadata"]["type"]
-      end
-      c_type.split(".").last
+    def results
+      Elmas::ResultSet.new(parsed)
     end
 
     def status
@@ -85,14 +64,6 @@ module Elmas
     def raise_and_log_error
       log_error
       fail BadRequestException.new(@response, parsed)
-    end
-
-    def resolve_class
-      constant_name = Utils.modulize(type)
-      return Object.const_get(constant_name)
-    rescue NameError
-      Elmas.info("Unknown resource encountered, proceed as usual but further resource details might have to be implemented")
-      return Class.new { include Elmas::Resource }
     end
   end
 end
