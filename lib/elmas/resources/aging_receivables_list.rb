@@ -13,7 +13,7 @@ module Elmas
     end
 
     def base_path
-      "financial/AgingReceivablesLists"
+      "read/financial/AgingReceivablesList"
     end
 
     def mandatory_attributes
