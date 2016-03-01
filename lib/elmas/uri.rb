@@ -23,8 +23,14 @@ module Elmas
         values = [values] unless values.is_a?(Array)
 
         filters = values.map do |value|
-          "#{query_attribute(attribute)} eq #{sanitize_value(value)}"
-        end
+          if value.is_a?(Hash)
+            value.map do |key, val|
+              "#{query_attribute(attribute)} #{key} #{sanitize_value(val)}"
+            end
+          else
+            "#{query_attribute(attribute)} eq #{sanitize_value(value)}"
+          end
+        end.flatten
 
         ["$filter", filters.join(" or ")]
       end
