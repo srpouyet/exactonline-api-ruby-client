@@ -107,12 +107,10 @@ the `next_page` method.
 accounts.next_page
 ```
 
-### Filter results
+### Filter and sort results
 
 Filtering result sets can be done by adding attributes to the initializer and then
 using `find_by`. Filters accept a single value or an array of values.
-
-So far only 'eq' has been implemented, so only direct matches will be returned.
 
 ```ruby
 # Find the account with code 123
@@ -120,6 +118,13 @@ accounts = Elmas::Account.new(code: '123').find_by(filter: [:code])
 
 # Find the accounts with code 123 and 345
 accounts = Elmas::Account.new(code: ['123', '345']).find_by(filter: [:code])
+```
+
+You can also match on values "greater than" or "less than" by specifying `gt` or `lt`:
+
+```ruby
+# Find all AgingReceivables with an amount greater than 0 in the third age range
+Elmas::AgingReceivablesList.new(age_group3_amount: { gt: 0 }).find_by(filters: [:age_group3_amount])
 ```
 
 Results can be sorted in the same way
