@@ -1,3 +1,14 @@
+2.1.0
+
+Allow filtering with 'greater_than' and 'less_than'
+Set proper endpoint for the AgingReceivablesList
+
+2.0.0
+
+Pagination for resources
+Implement receivables and aging receivables list resources
+Filter by array
+
 1.0.0
 
 Use 'proper' date format for ExactOnline
