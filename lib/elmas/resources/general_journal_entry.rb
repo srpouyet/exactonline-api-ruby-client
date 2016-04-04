@@ -9,5 +9,9 @@ module Elmas
     def mandatory_attributes
       [:journal, :general_journal_entry_lines]
     end
+
+    def other_attributes
+      [:financial_period, :financial_year, :currency, :journal_description]
+    end
   end
 end
