@@ -7,11 +7,7 @@ module Elmas
     end
 
     def mandatory_attributes
-      [:code, :general_journal_entry_lines]
-    end
-
-    def other_attributes
-      [:entry_id, :journal_code]
+      [:journal, :general_journal_entry_lines]
     end
   end
 end
