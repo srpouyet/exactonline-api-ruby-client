@@ -114,10 +114,10 @@ using `find_by`. Filters accept a single value or an array of values.
 
 ```ruby
 # Find the account with code 123
-accounts = Elmas::Account.new(code: '123').find_by(filter: [:code])
+accounts = Elmas::Account.new(code: '123').find_by(filters: [:code])
 
 # Find the accounts with code 123 and 345
-accounts = Elmas::Account.new(code: ['123', '345']).find_by(filter: [:code])
+accounts = Elmas::Account.new(code: ['123', '345']).find_by(filters: [:code])
 ```
 
 You can also match on values "greater than" or "less than" by specifying `gt` or `lt`:
@@ -138,7 +138,7 @@ Filters and sorting can also be combined
 
 ```ruby
 # Return accounts with code 123 and 345 sorted by first name
-accounts = Elmas::Account.new(code: ['123', '345']).find_by(filter: [:code], order_by: :first_name)
+accounts = Elmas::Account.new(code: ['123', '345']).find_by(filters: [:code], order_by: :first_name)
 ```
 
 To find an individual record by its ID the `find` method can be used
