@@ -1,3 +1,8 @@
+## 2.2.0
+
+- Updates to the README
+- New resources General Journal Entry and General Journal Entry Line
+
 ## 2.1.0
 
 - Allow filtering with 'greater_than' and 'less_than'
