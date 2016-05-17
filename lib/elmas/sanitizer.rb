@@ -21,7 +21,7 @@ module Elmas
           return value.id # Turn relation into ID
         elsif value.is_a?(Array)
           return sanitize_has_many(value)
-        elsif value.is_a?(DateTime)
+        elsif value.is_a?(Time) || value.is_a?(Date) || value.is_a?(DateTime)
           return sanitize_date_time(value)
         elsif value.is_a?(String) && value.match(/(Date\()/)
           number = value.scan(/\d+/).first.to_i / 1000.0
