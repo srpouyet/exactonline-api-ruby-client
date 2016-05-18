@@ -16,6 +16,9 @@ module Elmas
         to_submit
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
+      # rubocop:disable Style/GuardClause
       def sanitize_relationship(value)
         if value.is_a?(Elmas::Resource)
           return value.id # Turn relation into ID
@@ -31,6 +34,9 @@ module Elmas
           return value
         end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/PerceivedComplexity
+      # rubocop:enable Style/GuardClause
 
       def sanitize_date_time(value)
         value.strftime("%Y-%m-%d")
