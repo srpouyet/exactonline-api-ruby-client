@@ -69,7 +69,7 @@ module Elmas
       end
 
       def apply_order
-        @query << ["$order_by", Utils.camelize(@order_by.to_s)] if @order_by
+        @query << ["$orderby", Utils.camelize(@order_by.to_s)] if @order_by
       end
 
       def apply_select
