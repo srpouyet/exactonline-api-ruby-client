@@ -19,7 +19,6 @@ module Elmas
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/PerceivedComplexity
       def sanitize_relationship(value)
-        # rubocop:disable Style/GuardClause
         if value.is_a?(Elmas::Resource)
           return value.id # Turn relation into ID
         elsif value.is_a?(Array)
@@ -33,7 +32,6 @@ module Elmas
         else
           return value
         end
-        # rubocop:enable Style/GuardClause
       end
       # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/PerceivedComplexity
