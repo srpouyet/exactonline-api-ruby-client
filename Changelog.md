@@ -1,3 +1,7 @@
+## 2.2.2
+
+- Fix rubocop issues and specs
+
 ## 2.2.1
 
 - Fix date sanitizing (608883148a367d2388b9daa9b454ac6b2dbbf10d)
