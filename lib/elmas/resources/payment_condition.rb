@@ -11,7 +11,7 @@ module Elmas
     end
 
     # https://start.exactonline.nl/docs/HlpRestAPIResourcesDetails.aspx?name=CashflowPaymentConditions
-    def other_attributes # rubocop:disable Metrics/MethodLength
+    def other_attributes
       [
         :created, :description, :discount_payment_days,
         :discount_percentage, :payment_days, :payment_discount_type,
