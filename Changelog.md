@@ -1,3 +1,8 @@
+## 2.3.1
+
+- Fix typo in bank entry
+- Add GL_account to invoice line
+
 ## 2.3.0
 
 - add PaymentCondition resource (fb072e97394bdefd499d432336f7303d4befc4b0)
