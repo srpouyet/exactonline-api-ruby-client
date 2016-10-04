@@ -11,10 +11,11 @@ module Elmas
     attr_accessor :attributes, :url
     attr_reader :response
 
-    def initialize(attributes = {})
+    def initialize(attributes = {}, client: nil)
       @attributes = Utils.normalize_hash(attributes)
       @filters = []
       @query = []
+      @client = client
     end
 
     def id
@@ -45,7 +46,7 @@ module Elmas
 
     # Normally use the url method (which applies the filters) but sometimes you only want to use the base path or other paths
     def get(uri = self.uri)
-      @response = Elmas.get(URI.unescape(uri.to_s))
+      @response = client.get(URI.unescape(uri.to_s))
     end
 
     def valid?
@@ -61,8 +62,8 @@ module Elmas
     def save
       attributes_to_submit = sanitize
       if valid?
-        return @response = Elmas.post(base_path, params: attributes_to_submit) unless id?
-        return @response = Elmas.put(basic_identifier_uri, params: attributes_to_submit)
+        return @response = client.post(base_path, params: attributes_to_submit) unless id?
+        return @response = client.put(basic_identifier_uri, params: attributes_to_submit)
       else
         Elmas.error("Invalid Resource #{self.class.name}, attributes: #{@attributes.inspect}")
         Elmas::Response.new(Faraday::Response.new(status: 400, body: "Invalid Request"))
@@ -71,7 +72,7 @@ module Elmas
 
     def delete
       return nil unless id?
-      Elmas.delete(basic_identifier_uri)
+      client.delete(basic_identifier_uri)
     end
 
     # Getter/Setter for resource
@@ -83,6 +84,10 @@ module Elmas
         nil unless @attributes[method.to_sym]
       end
       @attributes[method.to_sym]
+    end
+
+    def client
+      @client || Elmas
     end
 
     private
